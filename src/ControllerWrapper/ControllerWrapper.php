@@ -2,6 +2,8 @@
 
 namespace Perry\ControllerWrapper;
 
+use Perry\SwaggerGenerator\SwaggerGenerator;
+
 /**
  * @template T
  */
@@ -12,9 +14,13 @@ class ControllerWrapper
      */
     protected $controller;
 
+    private SwaggerGenerator $generator;
+
+
     public function __construct($controller)
     {
         $this->controller = $controller;
+        $this->generator = app(SwaggerGenerator::class);
     }
 
     /**
@@ -33,6 +39,7 @@ class ControllerWrapper
     {
         try {
             $response = call_user_func_array([$this->controller, $method], $args);
+            $this->generator->generateDocAndSaveOnCache($args, $response);
 
             return $response;
         } catch (\Throwable $e) {
