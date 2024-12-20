@@ -1,0 +1,25 @@
+{
+    "name": "n4m-ward/laravel-perry",
+    "type": "library",
+    "require-dev": {
+        "orchestra/testbench": "^9.8",
+        "phpunit/phpunit": "^11.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Perry\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "Tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "n4m-ward",
+            "email": "gabrielphp00@gmail.com"
+        }
+    ],
+    "require": {}
+}
