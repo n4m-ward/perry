@@ -4,6 +4,7 @@ namespace Perry\Files;
 
 use Perry\Exceptions\PerryStorageException;
 use Perry\SwaggerCache\SwaggerRootInfo;
+use Symfony\Component\Yaml\Yaml;
 
 class Storage
 {
@@ -34,6 +35,26 @@ class Storage
         }
 
         return unserialize($rootInfoSerialized);
+    }
+
+    public static function getSwaggerDoc(): ?string
+    {
+        $docFile = StoragePathResolver::resolveDocumentationFolder() .'/output.yaml';
+        if(!is_file($docFile)) {
+            return null;
+        }
+
+        return file_get_contents($docFile);
+    }
+
+    public static function saveSwaggerDoc(array $docArray): void
+    {
+        $docYaml = Yaml::dump($docArray);
+        if(!is_dir(StoragePathResolver::resolveDocumentationFolder())) {
+            mkdir(StoragePathResolver::resolveDocumentationFolder());
+        }
+
+        self::saveFile(StoragePathResolver::resolveDocumentationFolder() .'/output.yaml', $docYaml);
     }
 
     private static function saveFile(string $file, string $content): void

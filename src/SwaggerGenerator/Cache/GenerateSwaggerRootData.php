@@ -1,6 +1,6 @@
 <?php
 
-namespace Perry\SwaggerGenerator\SwaggerRoot;
+namespace Perry\SwaggerGenerator\Cache;
 
 use Perry\Attributes\Info;
 use Perry\Attributes\Servers;

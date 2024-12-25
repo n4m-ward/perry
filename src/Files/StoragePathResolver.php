@@ -8,4 +8,9 @@ class StoragePathResolver
     {
         return storage_path('/swagger/cache');
     }
+
+    public static function resolveDocumentationFolder(): string
+    {
+        return storage_path('/swagger/documentation');
+    }
 }
