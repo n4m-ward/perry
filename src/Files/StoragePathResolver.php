@@ -13,4 +13,9 @@ class StoragePathResolver
     {
         return storage_path('/swagger/documentation');
     }
+
+    public static function resolveRequestsFolder(): string
+    {
+        return storage_path('/swagger/requests');
+    }
 }

@@ -4,6 +4,7 @@ namespace Perry\Files;
 
 use Perry\Exceptions\PerryStorageException;
 use Perry\SwaggerCache\SwaggerRootInfo;
+use Perry\SwaggerGenerator\Cache\Dtos\TestRequestDto;
 use Symfony\Component\Yaml\Yaml;
 
 class Storage
@@ -19,6 +20,46 @@ class Storage
         }
 
         self::saveFile($rootInfoFolder . '/root_info', serialize($rootInfo));
+    }
+
+    public static function saveTestRequest(TestRequestDto $dto): void
+    {
+        $allRequestsFolder = StoragePathResolver::resolveRequestsFolder();
+        $endpointRequestsFolder = str_replace('/', '_', $dto->path);
+        $testFolder = join('/', [$allRequestsFolder, $endpointRequestsFolder, $dto->method]);
+
+        self::createTestFolderIfNeeded($dto);
+        self::saveFile($testFolder . '/' . $dto->statusCode, serialize($dto));
+    }
+
+    private static function createTestFolderIfNeeded(TestRequestDto $dto): void
+    {
+        $allRequestsFolder = StoragePathResolver::resolveRequestsFolder();
+        if(!is_dir($allRequestsFolder)) {
+            mkdir($allRequestsFolder);
+        }
+        $endpointRequestsFolder = str_replace('/', '_', $dto->path);
+        $endpointRequestsFolder = $allRequestsFolder . '/'. $endpointRequestsFolder;
+
+        if(!is_dir($endpointRequestsFolder)) {
+            mkdir($endpointRequestsFolder);
+        }
+        if(!is_dir($endpointRequestsFolder . '/'. $dto->method)) {
+            mkdir($endpointRequestsFolder . '/'. $dto->method);
+        }
+    }
+
+    public static function getSingleTestRequest(string $endpoint, string $method, string $statusCode): ?TestRequestDto
+    {
+        $allRequestsFolder = StoragePathResolver::resolveRequestsFolder();
+        $endpoint = str_replace('/', '_', $endpoint);
+        $fullPath = join('/', [$allRequestsFolder, $endpoint, $method, $statusCode]);
+
+        if(!is_file($fullPath)) {
+            return null;
+        }
+
+        return unserialize(file_get_contents($fullPath));
     }
 
     /**
