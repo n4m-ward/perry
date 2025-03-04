@@ -14,7 +14,25 @@ class GenerateSwaggerFromCacheFiles
     {
         $output = $this->generateRootInfo();
 
+        $requestFolder = Storage::loadRequestFolder();
+        $output['paths'] = $this->parseFoldersToRequestDto($requestFolder);
+
         Storage::saveSwaggerDoc($output);
+    }
+
+    private function parseFoldersToRequestDto(array $folders): array
+    {
+        $output = [];
+        $parseEndpoint = new ParseEndpointToSwaggerDocumentation();
+
+        foreach ($folders as $folder) {
+            $endpoint = str_replace('_', '/', $folder);
+            if(!str_starts_with($endpoint, '/')) {
+                $endpoint = '/' . $endpoint;
+            }
+            $output[$endpoint] = $parseEndpoint->execute($folder);
+        }
+        return $output;
     }
 
     /**

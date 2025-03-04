@@ -62,6 +62,16 @@ class Storage
         return unserialize(file_get_contents($fullPath));
     }
 
+    public static function loadRequestFolder(string $subPath = ''): array
+    {
+        $allRequestsFolderPath = StoragePathResolver::resolveRequestsFolder() . $subPath;
+        $allRequestsFolder = scandir($allRequestsFolderPath);
+        unset($allRequestsFolder[0]);
+        unset($allRequestsFolder[1]);
+
+        return $allRequestsFolder;
+    }
+
     /**
      * @throws PerryStorageException
      */
