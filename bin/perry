@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+
+$autoloadPaths = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../autoload.php'
+];
+
+foreach ($autoloadPaths as $autoload) {
+    if (file_exists($autoload)) {
+        require_once $autoload;
+        break;
+    }
+}
+
+passthru('./vendor/bin/phpunit', $exitCode);
+
+if ($exitCode !== 0) {
+    echo "❌ Phpunit tests failed, aborting\n";
+    exit($exitCode);
+}
+
+echo "✅ Generating swagger documentation\n";
+
+
+$swaggerGenerator = new \Perry\SwaggerGenerator\SwaggerGenerator();
+
+$swaggerGenerator->generateSwaggerFromCacheFiles();

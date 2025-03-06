@@ -15,6 +15,7 @@
             "Tests\\": "Tests/"
         }
     },
+    "bin": ["bin/perry"],
     "authors": [
         {
             "name": "n4m-ward",
