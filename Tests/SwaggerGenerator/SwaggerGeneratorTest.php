@@ -95,10 +95,13 @@ info:
     version: 1.0.0
     title: 'Example server title'
     description: 'Example server description'
+paths:
+    /: { get: { summary: 'generate swagger from cache files should generate a yaml with root info', description: 'generate swagger from cache files should generate a yaml with root info', operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfo, responses: { 200: { description: '200', content: { application/json: { schema: {  } } } } } } }
+    /api/expected/endpoint: { post: { summary: 'should generate root api documentation', description: 'should generate root api documentation', operationId: test_shouldGenerateRootApiDocumentation, responses: { 200: { description: '200', content: { application/json: { schema: {  } } } } }, requestBody: { description: 'should generate root api documentation', content: { application/json: { schema: { type: object, properties: { param3: { type: boolean, example: false }, param4: { type: integer, format: int32, example: 4 }, param5: { type: object, properties: { param6: { type: string, example: value6 }, param7: { type: array, items: { type: string }, example: [param8, param9] } }, example: { param6: value6, param7: [param8, param9] } } } } } } } } }
 
 YAML;
 
-        $this->swaggerGenerator->generateDocAndSaveOnCache([], response()->json()); // to generate the basic route info
+        $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json()); // to generate the basic route info
         $this->swaggerGenerator->generateSwaggerFromCacheFiles();
 
         $documentation = Storage::getSwaggerDoc();
