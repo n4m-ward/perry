@@ -9,6 +9,7 @@ class DummyController
 {
     public function dummyRequest(Request $request): JsonResponse
     {
-        return response()->json([]);
+        $dummyControllerResponse = DummyControllerMock::getResponse();
+        return response()->json($dummyControllerResponse['body'], $dummyControllerResponse['statusCode']);
     }
 }
