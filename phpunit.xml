@@ -8,6 +8,9 @@
         <testsuite name="Tests">
             <directory>Tests</directory>
         </testsuite>
+        <testsuite name="PerryTest">
+            <directory>tests</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>

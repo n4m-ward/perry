@@ -12,7 +12,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\": "Tests/"
+            "Tests\\": "Tests/",
+            "PerryTest\\": "tests/"
         }
     },
     "bin": ["bin/perry"],
