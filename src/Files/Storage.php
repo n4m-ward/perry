@@ -86,7 +86,6 @@ class Storage
         }
 
         $rootInfoSerialized = file_get_contents($rootInfoFolder);
-        dump($rootInfoSerialized);
 
         if(empty($rootInfoSerialized)) {
             throw new PerryStorageException('root_info file not found on cache!');
