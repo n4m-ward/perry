@@ -1,9 +1,12 @@
 #!/usr/bin/env php
 <?php
 
+const VENDOR_DIR_AS_PROJECT = __DIR__ . '/../vendor/autoload.php';
+const VENDOR_DIR_AS_LIBRARY = __DIR__ . '/../../autoload.php';
+
 $autoloadPaths = [
-    __DIR__ . '/../vendor/autoload.php',
-    __DIR__ . '/../../autoload.php'
+    VENDOR_DIR_AS_PROJECT,
+    VENDOR_DIR_AS_LIBRARY,
 ];
 
 foreach ($autoloadPaths as $autoload) {
@@ -13,16 +16,25 @@ foreach ($autoloadPaths as $autoload) {
     }
 }
 
-passthru('./vendor/bin/phpunit', $exitCode);
+use Perry\ProjectSetup\ProjectSetup;
+use Perry\SwaggerGenerator\SwaggerGenerator;
+use Perry\UnitTest\UnitTestExecutor;
 
-if ($exitCode !== 0) {
-    echo "❌ Phpunit tests failed, aborting\n";
+$projectSetup = new ProjectSetup();
+$projectSetup->executeAndExitIfNecessary();
+
+$unitTestExecutor = new UnitTestExecutor();
+$exitCode = $unitTestExecutor->execute();
+
+echo "\n";
+
+if ($exitCode !== UnitTestExecutor::EXIT_CODE_OK) {
+    echo "❌ Phpunit tests failed, aborting\n\n";
     exit($exitCode);
 }
 
-echo "✅ Generating swagger documentation\n";
+echo "✅ Generating swagger documentation\n\n";
 
-
-$swaggerGenerator = new \Perry\SwaggerGenerator\SwaggerGenerator();
+$swaggerGenerator = new SwaggerGenerator();
 
 $swaggerGenerator->generateSwaggerFromCacheFiles();

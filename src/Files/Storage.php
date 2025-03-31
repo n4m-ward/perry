@@ -19,7 +19,7 @@ class Storage
             mkdir($rootInfoFolder);
         }
 
-        self::saveFile($rootInfoFolder . '/root_info', serialize($rootInfo));
+        self::saveFile($rootInfoFolder . '/root_info.cache', serialize($rootInfo));
     }
 
     public static function saveTestRequest(TestRequestDto $dto): void
@@ -78,11 +78,18 @@ class Storage
     public static function getRootInfo(): SwaggerRootInfo
     {
         $cacheFolder = self::getCacheFolder();
-        $rootInfoFolder = $cacheFolder . '/'. self::ROOT_INFO_DIR . '/root_info';
+        $rootInfoFolder = $cacheFolder . '/'. self::ROOT_INFO_DIR . '/root_info.cache';
+
+
+        if (!is_file($rootInfoFolder)) {
+            throw new PerryStorageException('root_info file not found');
+        }
+
         $rootInfoSerialized = file_get_contents($rootInfoFolder);
+        dump($rootInfoSerialized);
 
         if(empty($rootInfoSerialized)) {
-            throw new PerryStorageException('Root info file not found on cache!');
+            throw new PerryStorageException('root_info file not found on cache!');
         }
 
         return unserialize($rootInfoSerialized);

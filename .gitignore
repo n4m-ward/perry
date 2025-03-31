@@ -1,3 +1,5 @@
 /vendor/
 .idea
 .phpunit.result.cache
+perry.json
+perry_output
