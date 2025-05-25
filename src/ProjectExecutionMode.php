@@ -2,6 +2,8 @@
 
 namespace Perry;
 
+use Perry\UnitTest\ProjectExecutionModeOverride;
+
 enum ProjectExecutionMode
 {
     case PACKAGE_MODE;
@@ -18,6 +20,10 @@ enum ProjectExecutionMode
 
     public static function load(): self
     {
+        if (ProjectExecutionModeOverride::shouldOverride()) {
+            return ProjectExecutionModeOverride::load();
+        }
+
         if(self::isProjectUsingPhpUnit()) {
             return self::UNIT_TEST;
         }

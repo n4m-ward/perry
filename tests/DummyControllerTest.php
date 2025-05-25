@@ -19,12 +19,13 @@ class DummyControllerTest extends BaseTestCase
 
         DummyControllerMock::mockHttpResponse(['success' => true], Response::HTTP_CREATED);
 
-        $response = $this->post('/user', [
+        $response = $this->perryHttp()
+            ->withBody([
             'name' => 'John Doe',
             'age' => 25,
             'email' => 'john@doe.com',
             'password' => 'password',
-        ]);
+        ])->post('/user');
 
         $response = json_decode($response->getContent(), true);
 
