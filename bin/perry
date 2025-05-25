@@ -2,7 +2,7 @@
 <?php
 
 const VENDOR_DIR_AS_PROJECT = __DIR__ . '/../vendor/autoload.php';
-const VENDOR_DIR_AS_LIBRARY = __DIR__ . '/../../autoload.php';
+const VENDOR_DIR_AS_LIBRARY = __DIR__ . '/../../../autoload.php';
 
 $autoloadPaths = [
     VENDOR_DIR_AS_PROJECT,
