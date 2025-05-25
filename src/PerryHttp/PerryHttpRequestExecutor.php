@@ -26,7 +26,6 @@ readonly class PerryHttpRequestExecutor
      */
     public function execPost($uri, array $data = [], array $headers = []): TestResponse
     {
-        $this->validateHttpRequestUsage();
         $response = $this->testCase->post($uri, $data, $headers);
         (new GenerateSwaggerRootData())->execute();
         $testRequestDto = TestRequestDtoGenerator::generate('post', $uri, $data, $headers, $response);
