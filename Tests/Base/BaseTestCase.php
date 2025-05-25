@@ -26,6 +26,6 @@ class BaseTestCase extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        ProjectExecutionModeOverride::set(ProjectExecutionMode::UNIT_TEST);
+        ProjectExecutionModeOverride::set(ProjectExecutionMode::PROJECT_UNIT_TEST);
     }
 }

@@ -9,12 +9,13 @@ enum ProjectExecutionMode
     case PACKAGE_MODE;
     case PROJECT_MODE;
     case UNIT_TEST;
+    case PROJECT_UNIT_TEST;
 
     public function getRootFolder(): string
     {
         return match ($this) {
-            self::UNIT_TEST, self::PROJECT_MODE => __DIR__ . '/..',
-            self::PACKAGE_MODE => __DIR__ . '/../../../..',
+            self::PROJECT_UNIT_TEST, self::PROJECT_MODE => __DIR__ . '/..',
+            self::PACKAGE_MODE, self::UNIT_TEST => __DIR__ . '/../../../..',
         };
     }
 
