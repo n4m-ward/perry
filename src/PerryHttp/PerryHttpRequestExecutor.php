@@ -48,10 +48,45 @@ readonly class PerryHttpRequestExecutor
         return $response;
     }
 
-    private function validateHttpRequestUsage(): void
+    /**
+     * @throws \ReflectionException
+     * @throws PerryInfoAttributeNotFoundException
+     */
+    public function execPut($uri, array $data = [], array $headers = []): TestResponse
     {
-        if (!in_array(MakesHttpRequests::class, class_uses($this->testCase))) {
-            throw new \InvalidArgumentException('TestCase must use MakesHttpRequests');
-        }
+        $response = $this->testCase->put($uri, $data, $headers);
+        (new GenerateSwaggerRootData())->execute();
+        $testRequestDto = TestRequestDtoGenerator::generate('get', $uri, [], $headers, $response);
+        Storage::saveTestRequest($testRequestDto);
+
+        return $response;
+    }
+
+    /**
+     * @throws \ReflectionException
+     * @throws PerryInfoAttributeNotFoundException
+     */
+    public function execPatch($uri, array $data = [], array $headers = []): TestResponse
+    {
+        $response = $this->testCase->patch($uri, $data, $headers);
+        (new GenerateSwaggerRootData())->execute();
+        $testRequestDto = TestRequestDtoGenerator::generate('get', $uri, [], $headers, $response);
+        Storage::saveTestRequest($testRequestDto);
+
+        return $response;
+    }
+
+    /**
+     * @throws \ReflectionException
+     * @throws PerryInfoAttributeNotFoundException
+     */
+    public function execDelete($uri, array $data = [], array $headers = []): TestResponse
+    {
+        $response = $this->testCase->delete($uri, $data, $headers);
+        (new GenerateSwaggerRootData())->execute();
+        $testRequestDto = TestRequestDtoGenerator::generate('get', $uri, [], $headers, $response);
+        Storage::saveTestRequest($testRequestDto);
+
+        return $response;
     }
 }

@@ -45,6 +45,33 @@ final class PerryHttp
         return $this->getRequestExecutor()->execGet($uri, $this->headers);
     }
 
+    /**
+     * @throws \ReflectionException
+     * @throws PerryInfoAttributeNotFoundException
+     */
+    public function put(string $uri): TestResponse
+    {
+        return $this->getRequestExecutor()->execPut($uri, $this->headers);
+    }
+
+    /**
+     * @throws \ReflectionException
+     * @throws PerryInfoAttributeNotFoundException
+     */
+    public function patch(string $uri): TestResponse
+    {
+        return $this->getRequestExecutor()->execPatch($uri, $this->headers);
+    }
+
+    /**
+     * @throws \ReflectionException
+     * @throws PerryInfoAttributeNotFoundException
+     */
+    public function delete(string $uri): TestResponse
+    {
+        return $this->getRequestExecutor()->execDelete($uri, $this->headers);
+    }
+
     private function getRequestExecutor(): PerryHttpRequestExecutor
     {
         return new PerryHttpRequestExecutor($this->testCase);

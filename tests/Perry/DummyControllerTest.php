@@ -81,8 +81,40 @@ class DummyControllerTest extends BaseTestCase
                 'Accept' => 'application/json',
                 'bearer' => 'token',
             ])
-            ->get('/user/123')
+            ->get('/users')
             ->assertJson($response)
+            ->assertStatus(Response::HTTP_OK);
+    }
+
+    public function test_shouldUpdateUser(): void
+    {
+        Route::put('/user/123', [DummyController::class, 'dummyRequest']);
+
+        DummyControllerMock::mockHttpResponse(['success' => true], Response::HTTP_OK);
+
+        $this
+            ->perryHttp()
+            ->withBody([
+                'name' => 'John Doe',
+                'age' => 25,
+                'email' => 'john@doe.com',
+                'password' => 'password',
+            ])
+            ->put('/user/123')
+            ->assertJson(['success' => true])
+            ->assertStatus(Response::HTTP_OK);
+    }
+
+    public function test_shouldDeleteUser(): void
+    {
+        Route::delete('/user/{user_id}', [DummyController::class, 'dummyRequest']);
+
+        DummyControllerMock::mockHttpResponse([], Response::HTTP_OK);
+
+        $this
+            ->perryHttp()
+            ->delete('/user/123')
+            ->assertJson([])
             ->assertStatus(Response::HTTP_OK);
     }
 }
