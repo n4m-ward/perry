@@ -132,8 +132,8 @@ class Storage
     public static function deleteCacheFolder(): void
     {
         $cacheFolder = StoragePathResolver::resolveCacheFolder();
-        if(is_dir("$cacheFolder/requests")) {
-            self::deleteFolder("$cacheFolder/requests");
+        if(is_dir("$cacheFolder")) {
+            self::deleteFolder("$cacheFolder");
         }
     }
 
