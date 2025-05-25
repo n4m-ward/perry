@@ -8,7 +8,9 @@ class UnitTestExecutor
 
     public function execute(): int
     {
-        passthru('./vendor/bin/phpunit', $exitCode);
+        $unitTestConfig = UnitTestConfigLoader::loadOrFail();
+
+        passthru("./vendor/bin/phpunit {$unitTestConfig->testsFolderPath}", $exitCode);
 
         return $exitCode;
     }
