@@ -42,7 +42,7 @@ class GenerateSwaggerRootData
 
         $baseClass = $reflectionClass->getParentClass();
         if(!$baseClass) {
-            throw new PerryInfoAttributeNotFoundException('attribute'. Info::class. 'not found');
+            throw new PerryInfoAttributeNotFoundException('attribute '. Info::class. ' not found');
         }
 
         return $this->getClassWithRootInfo($baseClass);
