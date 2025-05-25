@@ -128,4 +128,36 @@ class Storage
         }
         return $cacheFolder;
     }
+
+    public static function deleteCacheFolder(): void
+    {
+        $cacheFolder = StoragePathResolver::resolveCacheFolder();
+        if(is_dir("$cacheFolder/requests")) {
+            self::deleteFolder("$cacheFolder/requests");
+        }
+    }
+
+    private static function deleteFolder(string $path): void
+    {
+        if (!file_exists($path)) {
+            return;
+        }
+
+        if (is_file($path) || is_link($path)) {
+            unlink($path);
+            return;
+        }
+
+        $items = scandir($path);
+        foreach ($items as $item) {
+            if ($item === '.' || $item === '..') {
+                continue;
+            }
+
+            $itemPath = $path . DIRECTORY_SEPARATOR . $item;
+            self::deleteFolder($itemPath);
+        }
+
+        rmdir($path);
+    }
 }
