@@ -19,17 +19,17 @@ class DummyControllerTest extends BaseTestCase
 
         DummyControllerMock::mockHttpResponse(['success' => true], Response::HTTP_CREATED);
 
-        $response = $this->perryHttp()
+        $this
+            ->perryHttp()
             ->withBody([
-            'name' => 'John Doe',
-            'age' => 25,
-            'email' => 'john@doe.com',
-            'password' => 'password',
-        ])->post('/user');
-
-        $response = json_decode($response->getContent(), true);
-
-        $this->assertTrue($response['success']);
+                'name' => 'John Doe',
+                'age' => 25,
+                'email' => 'john@doe.com',
+                'password' => 'password',
+            ])
+            ->post('/user')
+            ->assertJson(['success' => true])
+            ->assertStatus(Response::HTTP_CREATED);
     }
 
     public function test_shouldReturnUser(): void
@@ -43,16 +43,46 @@ class DummyControllerTest extends BaseTestCase
             'permissions' => ['CREATE_USER', 'UPDATE_USER'],
         ], Response::HTTP_OK);
 
-        $response = $this->get('/user/123', headers: [
-            'Accept' => 'application/json',
-            'bearer' => 'token',
-        ]);
+        $this
+            ->perryHttp()
+            ->withHeaders([
+                'Accept' => 'application/json',
+                'bearer' => 'token',
+            ])
+            ->get('/user/123')
+            ->assertJson([
+                'name' => 'John Doe',
+                'age' => 25,
+                'email' => 'john@doe.com',
+                'permissions' => ['CREATE_USER', 'UPDATE_USER'],
+            ])
+            ->assertStatus(Response::HTTP_OK);
+    }
 
-        $responseJson = json_decode($response->getContent(), true);
+    public function test_shouldReturnUserArray(): void
+    {
+        Route::get('/users', [DummyController::class, 'dummyRequest']);
 
-        $this->assertEquals('John Doe', $responseJson['name']);
-        $this->assertEquals(25, $responseJson['age']);
-        $this->assertEquals('john@doe.com', $responseJson['email']);
-        $this->assertEquals(['CREATE_USER', 'UPDATE_USER'], $responseJson['permissions']);
+        DummyControllerMock::mockHttpResponse($response = [
+            'total' => '1',
+            'items' => [
+                [
+                    'name' => 'John Doe',
+                    'age' => 25,
+                    'email' => 'john@doe.com',
+                    'permissions' => ['CREATE_USER', 'UPDATE_USER'],
+                ]
+            ],
+        ], Response::HTTP_OK);
+
+        $this
+            ->perryHttp()
+            ->withHeaders([
+                'Accept' => 'application/json',
+                'bearer' => 'token',
+            ])
+            ->get('/user/123')
+            ->assertJson($response)
+            ->assertStatus(Response::HTTP_OK);
     }
 }

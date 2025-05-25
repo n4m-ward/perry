@@ -5,61 +5,67 @@ namespace Perry\SwaggerGenerator\Helper;
 class SwaggerObjectHelper
 {
     public static function formatToSwagger(array $input): array {
-        $output = [];
+        return array_map(self::formatTypeFromSingleItem(...), $input);
+    }
 
-        foreach ($input as $key => $value) {
-            if (is_bool($value)) {
-                $output[$key] = [
-                    'type' => 'boolean',
+    private static function formatTypeFromSingleItem(mixed $value): array
+    {
+        if (is_bool($value)) {
+            return [
+                'type' => 'boolean',
+                'example' => $value,
+            ];
+        }
+
+        if (is_int($value)) {
+            return [
+                'type' => 'integer',
+                'format' => 'int32',
+                'example' => $value,
+            ];
+        }
+
+        if (is_float($value)) {
+            return [
+                'type' => 'number',
+                'format' => 'int32',
+                'example' => $value,
+            ];
+        }
+
+        if (is_string($value)) {
+            return [
+                'type' => 'string',
+                'example' => $value,
+            ];
+        }
+
+        if (is_array($value)) {
+            if (array_keys($value) === range(0, count($value) - 1)) {
+                return [
+                    'type' => 'array',
+                    'items' => self::formatTypeFromSingleItem($value[0] ?? null),
                     'example' => $value,
-                ];
-            } elseif (is_int($value)) {
-                $output[$key] = [
-                    'type' => 'integer',
-                    'format' => 'int32',
-                    'example' => $value,
-                ];
-            } elseif (is_float($value)) {
-                $output[$key] = [
-                    'type' => 'number',
-                    'format' => 'int32',
-                    'example' => $value,
-                ];
-            } elseif (is_string($value)) {
-                $output[$key] = [
-                    'type' => 'string',
-                    'example' => $value,
-                ];
-            } elseif (is_array($value)) {
-                if (array_keys($value) === range(0, count($value) - 1)) {
-                    $output[$key] = [
-                        'type' => 'array',
-                        'items' => [
-                            'type' => 'string',
-                        ],
-                        'example' => $value,
-                    ];
-                } else {
-                    $output[$key] = [
-                        'type' => 'object',
-                        'properties' => self::formatToSwagger($value),
-                        'example' => $value,
-                    ];
-                }
-            } elseif (is_null($value)) {
-                $output[$key] = [
-                    'type' => 'null',
-                    'example' => null,
                 ];
             } else {
-                $output[$key] = [
-                    'type' => 'string',
+                return [
+                    'type' => 'object',
+                    'properties' => self::formatToSwagger($value),
                     'example' => $value,
                 ];
             }
         }
 
+        if (is_null($value)) {
+            return [
+                'type' => 'null',
+                'example' => null,
+            ];
+        }
 
-        return $output;
+        return [
+            'type' => 'string',
+            'example' => $value,
+        ];
     }
 }
