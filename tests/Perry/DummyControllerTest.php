@@ -1,6 +1,6 @@
 <?php
 
-namespace PerryTest;
+namespace PerryTest\Perry;
 
 use Illuminate\Support\Facades\Route;
 use Perry\PerryHttp\PerryHttpRequest;
