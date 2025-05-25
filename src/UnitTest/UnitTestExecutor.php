@@ -10,7 +10,7 @@ class UnitTestExecutor
     {
         $unitTestConfig = UnitTestConfigLoader::loadOrFail();
 
-        passthru("./vendor/bin/phpunit {$unitTestConfig->testsFolderPath}", $exitCode);
+        passthru("./vendor/bin/phpunit .{$unitTestConfig->testsFolderPath}", $exitCode);
 
         return $exitCode;
     }
