@@ -12,12 +12,16 @@ class GenerateSwaggerFromCacheFiles
      */
     public function execute(): void
     {
-        $output = $this->generateRootInfo();
+        try {
+            $output = $this->generateRootInfo();
 
-        $requestFolder = Storage::loadRequestFolder();
-        $output['paths'] = $this->parseFoldersToRequestDto($requestFolder);
+            $requestFolder = Storage::loadRequestFolder();
+            $output['paths'] = $this->parseFoldersToRequestDto($requestFolder);
 
-        Storage::saveSwaggerDoc($output);
+            Storage::saveSwaggerDoc($output);
+        } finally {
+            Storage::deleteCacheFolder();
+        }
     }
 
     private function parseFoldersToRequestDto(array $folders): array
