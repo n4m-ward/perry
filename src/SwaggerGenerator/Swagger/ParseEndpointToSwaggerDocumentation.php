@@ -102,7 +102,7 @@ class ParseEndpointToSwaggerDocumentation
         $output = [];
         $requestFolder = Storage::loadRequestFolder("/$endpoint/$method");
         foreach ($requestFolder as $request) {
-            $output[(string) $request] = Storage::getSingleTestRequest($endpoint, $method, 200);
+            $output[(string) $request] = Storage::getSingleTestRequest($endpoint, $method, $request);
         }
 
         return $output;
