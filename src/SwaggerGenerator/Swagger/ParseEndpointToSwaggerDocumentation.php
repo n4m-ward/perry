@@ -73,15 +73,15 @@ class ParseEndpointToSwaggerDocumentation
         return $output;
     }
 
-    private function addPropertiesToResponses(array $responses): array
+    private function addPropertiesToResponses(array $response): array
     {
-        if(empty($responses['response'] ?? [])) {
+        if(empty($response)) {
             return [];
         }
 
         return [
             'type' => 'object',
-            'properties' => SwaggerObjectHelper::formatToSwagger($responses['response'] ?? [])
+            'properties' => SwaggerObjectHelper::formatToSwagger($response)
         ];
     }
 
