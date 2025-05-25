@@ -14,7 +14,7 @@ enum ProjectExecutionMode
     {
         return match ($this) {
             self::UNIT_TEST, self::PROJECT_MODE => __DIR__ . '/..',
-            self::PACKAGE_MODE => __DIR__ . '/../..',
+            self::PACKAGE_MODE => __DIR__ . '/../../../..',
         };
     }
 
