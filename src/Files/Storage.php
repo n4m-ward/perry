@@ -82,7 +82,7 @@ class Storage
 
 
         if (!is_file($rootInfoFolder)) {
-            throw new PerryStorageException('root_info file not found');
+            throw new PerryStorageException('No test documentation found. First create a e2e test to generate the documentation');
         }
 
         $rootInfoSerialized = file_get_contents($rootInfoFolder);
