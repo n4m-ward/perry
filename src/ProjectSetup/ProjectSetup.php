@@ -17,26 +17,9 @@ class ProjectSetup
             return;
         }
 
-        echo "✅ Generating default project config file \n\n";
-
-        $defaultUnitTestConfig = <<<JSON
-{
-    "testsFolderPath": "/tests/Perry",
-    "testExecutorPath": "/vendor/bin/phpunit",
-    "swaggerOutputPath": "/perry_output/swagger",
-    "cacheOutputPath": "/perry_output/cache"
-}
-JSON;
-
-        $executionMode = ProjectExecutionMode::load();
-        $projectRootFolder = $executionMode->getRootFolder();
-
-        file_put_contents($projectRootFolder. '/perry.json', $defaultUnitTestConfig);
-
-        $perryOutputFolder = $projectRootFolder . '/perry_output';
-        if (!is_dir($perryOutputFolder)) {
-            mkdir($perryOutputFolder);
-        }
+        $this->generateDefaultPerryConfigFile();
+        $this->generatePerryOutputFolder();
+        $this->generatePerryBaseTestCase();
 
         exit(0);
     }
@@ -49,5 +32,72 @@ JSON;
         $unitTestConfig = UnitTestConfigLoader::load();
 
         return !is_null($unitTestConfig);
+    }
+
+    private function generateDefaultPerryConfigFile(): void
+    {
+        echo "✅ Generating default project config file \n\n";
+
+        $defaultUnitTestConfig = <<<JSON
+{
+    "testsFolderPath": "/tests/Perry",
+    "testExecutorPath": "/vendor/bin/phpunit",
+    "swaggerOutputPath": "/perry_output/swagger",
+    "cacheOutputPath": "/perry_output/cache"
+}
+JSON;
+
+        file_put_contents($this->getProjectRootFolder() . '/perry.json', $defaultUnitTestConfig);
+    }
+
+    private function getProjectRootFolder(): string
+    {
+        return ProjectExecutionMode::load()->getRootFolder();
+    }
+
+    private function generatePerryOutputFolder(): void
+    {
+        $perryOutputFolder = $this->getProjectRootFolder() . '/perry_output';
+        if (!is_dir($perryOutputFolder)) {
+            mkdir($perryOutputFolder);
+        }
+    }
+
+    private function generatePerryBaseTestCase(): void
+    {
+        $baseTestCase = <<<PHP
+<?php
+
+namespace Tests\Perry;
+
+use Perry\Attributes\Info;
+use Perry\Attributes\Server;
+use Perry\Attributes\Servers;
+use Perry\PerryHttp\PerryHttpRequest;
+use Illuminate\Foundation\Testing\TestCase as LaravelTestCase;
+
+#[Servers(
+    new Server(description: 'Example server local', url: 'http://localhost:8000')
+)]
+#[Info(
+    version: '1.0.0',
+    title: 'Example server title',
+    description: 'Example server description',
+)]
+abstract class BaseTestCase extends LaravelTestCase
+{
+    use PerryHttpRequest;
+}
+
+PHP;
+        if(!is_dir($this->getProjectRootFolder() . '/tests')) {
+            mkdir($this->getProjectRootFolder() . '/tests');
+        }
+        if(!is_dir($this->getProjectRootFolder() . '/tests/Perry')) {
+            mkdir($this->getProjectRootFolder() . '/tests/Perry');
+        }
+        $baseTestCaseFile = $this->getProjectRootFolder() . '/tests/Perry/BaseTestCase.php';
+
+        file_put_contents($baseTestCaseFile, $baseTestCase);
     }
 }
