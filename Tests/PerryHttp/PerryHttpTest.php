@@ -6,12 +6,14 @@ use Illuminate\Support\Facades\Route;
 use Perry\PerryHttp\PerryHttpRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Base\BaseTestCase;
+use Tests\Base\RemoveSwaggerAfterTests;
 use Tests\Dummy\DummyController;
 use Tests\Dummy\DummyControllerMock;
 
 class PerryHttpTest extends BaseTestCase
 {
     use PerryHttpRequest;
+    use RemoveSwaggerAfterTests;
 
     public function test_shouldPost_withHeadersAndBody(): void
     {

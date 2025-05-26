@@ -137,6 +137,14 @@ class Storage
         }
     }
 
+    public static function deleteSwaggerFolder(): void
+    {
+        $swaggerFolder = StoragePathResolver::resolveDocumentationFolder();
+        if(is_dir($swaggerFolder)) {
+            self::deleteFolder($swaggerFolder);
+        }
+    }
+
     private static function deleteFolder(string $path): void
     {
         if (!file_exists($path)) {
