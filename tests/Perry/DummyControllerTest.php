@@ -32,6 +32,44 @@ class DummyControllerTest extends BaseTestCase
             ->assertStatus(Response::HTTP_CREATED);
     }
 
+    public function test_createUser_shouldReturn422_whenEmailAlreadyExists(): void
+    {
+        Route::post('/user', [DummyController::class, 'dummyRequest']);
+
+        DummyControllerMock::mockHttpResponse(['message' => 'An user already exists with this email'], Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        $this
+            ->perryHttp()
+            ->withBody([
+                'name' => 'John Doe',
+                'age' => 25,
+                'email' => 'john@doe.com',
+                'password' => 'password',
+            ])
+            ->post('/user')
+            ->assertJson(['message' => 'An user already exists with this email'])
+            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    public function test_createUser_shouldReturn500_whenAnInternalServerErrorHappens(): void
+    {
+        Route::post('/user', [DummyController::class, 'dummyRequest']);
+
+        DummyControllerMock::mockHttpResponse(['message' => 'Internal server error'], Response::HTTP_INTERNAL_SERVER_ERROR);
+
+        $this
+            ->perryHttp()
+            ->withBody([
+                'name' => 'John Doe',
+                'age' => 25,
+                'email' => 'john@doe.com',
+                'password' => 'password',
+            ])
+            ->post('/user')
+            ->assertJson(['message' => 'Internal server error'])
+            ->assertStatus(Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
     public function test_shouldReturnUser(): void
     {
         Route::get('/user/{user_id}', [DummyController::class, 'dummyRequest']);
@@ -109,12 +147,12 @@ class DummyControllerTest extends BaseTestCase
     {
         Route::delete('/user/{user_id}', [DummyController::class, 'dummyRequest']);
 
-        DummyControllerMock::mockHttpResponse([], Response::HTTP_OK);
+        DummyControllerMock::mockHttpResponse(null, Response::HTTP_NO_CONTENT);
 
         $this
             ->perryHttp()
             ->delete('/user/123')
-            ->assertJson([])
-            ->assertStatus(Response::HTTP_OK);
+            ->assertNoContent()
+            ->assertStatus(Response::HTTP_NO_CONTENT);
     }
 }
