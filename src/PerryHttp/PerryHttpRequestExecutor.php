@@ -56,7 +56,7 @@ readonly class PerryHttpRequestExecutor
     {
         $response = $this->testCase->put($uri, $data, $headers);
         (new GenerateSwaggerRootData())->execute();
-        $testRequestDto = TestRequestDtoGenerator::generate('get', $uri, [], $headers, $response);
+        $testRequestDto = TestRequestDtoGenerator::generate('put', $uri, [], $headers, $response);
         Storage::saveTestRequest($testRequestDto);
 
         return $response;
@@ -70,7 +70,7 @@ readonly class PerryHttpRequestExecutor
     {
         $response = $this->testCase->patch($uri, $data, $headers);
         (new GenerateSwaggerRootData())->execute();
-        $testRequestDto = TestRequestDtoGenerator::generate('get', $uri, [], $headers, $response);
+        $testRequestDto = TestRequestDtoGenerator::generate('patch', $uri, [], $headers, $response);
         Storage::saveTestRequest($testRequestDto);
 
         return $response;
@@ -84,7 +84,7 @@ readonly class PerryHttpRequestExecutor
     {
         $response = $this->testCase->delete($uri, $data, $headers);
         (new GenerateSwaggerRootData())->execute();
-        $testRequestDto = TestRequestDtoGenerator::generate('get', $uri, [], $headers, $response);
+        $testRequestDto = TestRequestDtoGenerator::generate('delete', $uri, [], $headers, $response);
         Storage::saveTestRequest($testRequestDto);
 
         return $response;
