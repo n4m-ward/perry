@@ -16,7 +16,7 @@
 #### Install the library:
 
 ```shell
-composer require n4m-ward/laravel-perry
+composer require n4m-ward/laravel-perry --dev
 ```
 
 #### Run the following command once to generate the configuration files
