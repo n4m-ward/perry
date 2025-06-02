@@ -196,4 +196,31 @@ YAML;
 
         $this->assertEquals($expectedDocumentation, $documentation);
     }
+
+    #[UseSecurityScheme('BearerToken')]
+    public function test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndUsedSecurityScheme(): void
+    {
+        $expectedDocumentation = <<<YAML
+openapi: 3.0.0
+servers:
+    - { description: 'Server 1', url: 'https://server1.com' }
+    - { description: 'Server 2', url: 'https://server2.com' }
+info:
+    version: 1.0.0
+    title: 'Example server title'
+    description: 'Example server description'
+paths:
+    /: { get: { summary: 'generate swagger from cache files should generate a yaml with root info and used security scheme', description: 'generate swagger from cache files should generate a yaml with root info and used security scheme', operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndUsedSecurityScheme, responses: { 200: { description: '200', content: { application/json: { schema: {  } } } } }, security: [{ BearerToken: {  } }] } }
+components:
+    securitySchemes: { BearerToken: { type: http, in: header, name: Authorization, scheme: bearer } }
+
+YAML;
+
+        $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json());
+        $this->swaggerGenerator->generateSwaggerFromCacheFiles();
+
+        $documentation = Storage::getSwaggerDoc();
+
+        $this->assertEquals($expectedDocumentation, $documentation);
+    }
 }

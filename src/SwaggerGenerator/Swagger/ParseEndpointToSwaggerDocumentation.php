@@ -2,6 +2,7 @@
 
 namespace Perry\SwaggerGenerator\Swagger;
 
+use Perry\Attributes\SecurityScheme\UseSecurityScheme;
 use Perry\Files\Storage;
 use Perry\SwaggerGenerator\Cache\Dtos\TestRequestDto;
 use Perry\SwaggerGenerator\Helper\SwaggerObjectHelper;
@@ -29,8 +30,12 @@ class ParseEndpointToSwaggerDocumentation
             'summary' => $requestDescription,
             'description' => $requestDescription,
             'operationId' => $requestWithLessStatusCode->testName,
-            'responses' => $this->formatSwaggerResponses($requestList)
+            'responses' => $this->formatSwaggerResponses($requestList),
         ];
+        if($requestWithLessStatusCode->usedSecurityScheme) {
+            $output['security'] = $this->formatSecurity($requestWithLessStatusCode->usedSecurityScheme);
+        }
+
         if(!empty($requestWithLessStatusCode->body)) {
             $output['requestBody'] = [
                 'description' => $requestDescription,
@@ -45,6 +50,18 @@ class ParseEndpointToSwaggerDocumentation
             ];
         }
 
+        return $output;
+    }
+
+    /**
+     * @param UseSecurityScheme[] $security
+     */
+    private function formatSecurity(array $security): array
+    {
+        $output = [];
+        foreach ($security as $useSecurityScheme) {
+            $output[][$useSecurityScheme->securityScheme] = $useSecurityScheme->scopes;
+        }
         return $output;
     }
 

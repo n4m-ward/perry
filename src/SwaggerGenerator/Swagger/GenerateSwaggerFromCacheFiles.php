@@ -35,10 +35,7 @@ class GenerateSwaggerFromCacheFiles
         $parseEndpoint = new ParseEndpointToSwaggerDocumentation();
 
         foreach ($folders as $folder) {
-            $endpoint = str_replace('_', '/', $folder);
-            if(!str_starts_with($endpoint, '/')) {
-                $endpoint = '/' . $endpoint;
-            }
+            $endpoint = $this->getEndpointFromFolderName($folder);
             $output[$endpoint] = $parseEndpoint->execute($folder);
         }
         return $output;
@@ -79,5 +76,14 @@ class GenerateSwaggerFromCacheFiles
         }
 
         return $output;
+    }
+
+    private function getEndpointFromFolderName(string $folder): string
+    {
+        $endpoint = str_replace('_', '/', $folder);
+        if (!str_starts_with($endpoint, '/')) {
+            $endpoint = '/' . $endpoint;
+        }
+        return $endpoint;
     }
 }

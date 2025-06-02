@@ -11,6 +11,7 @@ use Perry\Helpers\Tests\TestInfoResolver;
 use Perry\SwaggerGenerator\Cache\Dtos\TestRequestDto;
 use Perry\SwaggerGenerator\Cache\FindUsedSecurityScheme;
 use Perry\SwaggerGenerator\Cache\GenerateSwaggerRootData;
+use Perry\SwaggerGenerator\Cache\SaveSwaggerSecuritySchemeIfExists;
 use Perry\SwaggerGenerator\Swagger\GenerateSwaggerFromCacheFiles;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -26,6 +27,8 @@ class SwaggerGenerator
         $request = $this->findRequestOnParameters($parameters);
 
         (new GenerateSwaggerRootData())->execute();
+        (new SaveSwaggerSecuritySchemeIfExists())->execute();
+
         $usedSecurityScheme = (new FindUsedSecurityScheme())->execute();
         $dto = new TestRequestDto(
             testName: TestInfoResolver::resolve()->method,
