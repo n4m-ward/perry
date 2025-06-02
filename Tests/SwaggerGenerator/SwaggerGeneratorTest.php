@@ -3,6 +3,8 @@
 namespace Tests\SwaggerGenerator;
 
 use Perry\Attributes\SecurityScheme\SecurityScheme;
+use Perry\Attributes\SecurityScheme\UseSecurityScheme;
+use Perry\Exceptions\PerryAttributeNotFoundException;
 use Tests\Base\RemoveSwaggerAfterTests;
 use Illuminate\Http\Request;
 use Perry\Exceptions\PerryException;
@@ -13,6 +15,7 @@ use Perry\SwaggerGenerator\SwaggerGenerator;
 use ReflectionException;
 use Tests\Base\BaseTestCase;
 
+#[SecurityScheme(securityScheme: 'BearerToken', type: 'http', in: 'header', name: 'Authorization', scheme: 'bearer')]
 class SwaggerGeneratorTest extends BaseTestCase
 {
     use RemoveSwaggerAfterTests;
@@ -81,6 +84,55 @@ class SwaggerGeneratorTest extends BaseTestCase
         $this->assertEquals($requestBody, $requestDto->body);
         $this->assertEquals(json_encode($responseArray), $requestDto->response);
 
+    }
+
+
+    /**
+     * @throws PerryStorageException
+     * @throws PerryInfoAttributeNotFoundException
+     * @throws ReflectionException
+     * @throws PerryException
+     */
+    #[UseSecurityScheme('Bearer')]
+    public function test_generateDocAndSaveOnCache_shouldThrowExceptionWhenTestAreUsingSecurityScheme_ButBaseClassDoesNotHaveSecuritySchemeAttribute(): void
+    {
+        $this->expectException(PerryAttributeNotFoundException::class);
+        $this->expectExceptionMessage('SecurityScheme [Bearer] was not implemented');
+
+        $request = new Request(
+            server: [
+                'REQUEST_URI' => '/api/expected/endpoint'
+            ]
+        );
+        $request->setMethod('POST');
+        $response = response()->json();
+
+        $this->swaggerGenerator->generateDocAndSaveOnCache([$request], $response);
+    }
+
+
+    /**
+     * @throws PerryStorageException
+     * @throws PerryInfoAttributeNotFoundException
+     * @throws ReflectionException
+     * @throws PerryException
+     */
+    #[UseSecurityScheme('BearerToken')]
+    public function test_generateDocAndSaveOnCache_shouldGenerateDocWithSecurityScheme(): void
+    {
+        $request = new Request(
+            server: [
+                'REQUEST_URI' => '/api/expected/endpoint'
+            ]
+        );
+        $request->setMethod('POST');
+        $response = response()->json();
+
+        $this->swaggerGenerator->generateDocAndSaveOnCache([$request], $response);
+        $requestDto = Storage::getSingleTestRequest('api/expected/endpoint', 'POST', 200);
+
+        $this->assertEquals('BearerToken', $requestDto->usedSecurityScheme[0]->securityScheme);
+        $this->assertEquals([], $requestDto->usedSecurityScheme[0]->scopes);
     }
 
     /**
