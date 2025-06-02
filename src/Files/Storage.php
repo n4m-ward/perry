@@ -2,6 +2,7 @@
 
 namespace Perry\Files;
 
+use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Exceptions\PerryStorageException;
 use Perry\SwaggerCache\SwaggerRootInfo;
 use Perry\SwaggerGenerator\Cache\Dtos\TestRequestDto;
@@ -112,6 +113,39 @@ class Storage
         }
 
         self::saveFile(StoragePathResolver::resolveDocumentationFolder() .'/output.yaml', $docYaml);
+    }
+
+    public static function saveSecuritySchemes(array $securitySchemes): void
+    {
+        $cacheFolder = self::getCacheFolder();
+        $rootInfoFolder = $cacheFolder . '/'. self::ROOT_INFO_DIR;
+        if(!is_dir($rootInfoFolder)) {
+            mkdir($rootInfoFolder);
+        }
+
+        self::saveFile($rootInfoFolder . '/security_schemes.cache', serialize($securitySchemes));
+    }
+
+    /**
+     * @return SecurityScheme[]
+     */
+    public static function getSecuritySchemesOrEmpty(): array
+    {
+        $cacheFolder = self::getCacheFolder();
+        $securitySchemeFolder = $cacheFolder . '/'. self::ROOT_INFO_DIR . '/security_schemes.cache';
+
+
+        if (!is_file($securitySchemeFolder)) {
+            return [];
+        }
+
+        $securitySchemeSerialized = file_get_contents($securitySchemeFolder);
+
+        if(empty($securitySchemeSerialized)) {
+            return [];
+        }
+
+        return unserialize($securitySchemeSerialized);
     }
 
     private static function saveFile(string $file, string $content): void
