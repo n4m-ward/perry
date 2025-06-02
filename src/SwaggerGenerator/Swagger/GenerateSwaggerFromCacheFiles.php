@@ -17,6 +17,11 @@ class GenerateSwaggerFromCacheFiles
 
             $requestFolder = Storage::loadRequestFolder();
             $output['paths'] = $this->parseFoldersToRequestDto($requestFolder);
+            $components = $this->getComponents();
+
+            if (!empty($components)) {
+                $output['components'] = $components;
+            }
 
             Storage::saveSwaggerDoc($output);
         } finally {
@@ -61,6 +66,17 @@ class GenerateSwaggerFromCacheFiles
             'title' => $rootInfo->info->title,
             'description' => $rootInfo->info->description,
         ];
+
+        return $output;
+    }
+
+    private function getComponents(): array
+    {
+        $output = [];
+        $securitySchemes = (new GenerateSecurityScheme)->execute();
+        if(!empty($securitySchemes)) {
+            $output['securitySchemes'] = $securitySchemes;
+        }
 
         return $output;
     }
