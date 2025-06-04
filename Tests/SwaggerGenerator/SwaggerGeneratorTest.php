@@ -153,6 +153,8 @@ info:
     description: 'Example server description'
 paths:
     /: { get: { summary: 'generate swagger from cache files should generate a yaml with root info', description: 'generate swagger from cache files should generate a yaml with root info', operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfo, responses: { 200: { description: '200', content: { application/json: { schema: {  } } } } } } }
+components:
+    securitySchemes: { BearerToken: { type: http, in: header, name: Authorization, scheme: bearer } }
 
 YAML;
 
