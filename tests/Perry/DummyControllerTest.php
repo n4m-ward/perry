@@ -11,7 +11,7 @@ use Tests\Base\BaseTestCase;
 use Tests\Dummy\DummyController;
 use Tests\Dummy\DummyControllerMock;
 
-#[SecurityScheme(securityScheme: 'BearerToken', type: 'http', in: 'header', name: 'Authorization')]
+#[SecurityScheme(securityScheme: 'BearerToken', type: 'http', scheme: 'bearer')]
 class DummyControllerTest extends BaseTestCase
 {
     use PerryHttpRequest;
