@@ -22,11 +22,11 @@ jobs:
       - name: Installing dependencies
         run: composer install
 
+      - name: Creating perry initial files
+        run: php ./bin/perry
+
       - name: Running phpunit tests
         run: php ./vendor/bin/phpunit
 
-      - name: Creating perry initial files
-        run: php ./vendor/bin/perry
-
       - name: Running perry unit tests and generating documentation
-        run: php ./vendor/bin/perry
+        run: php ./bin/perry
