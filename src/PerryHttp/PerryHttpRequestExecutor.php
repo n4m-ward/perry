@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\Concerns\MakesHttpRequests;
 use Illuminate\Testing\TestResponse;
 use Perry\Exceptions\PerryInfoAttributeNotFoundException;
 use Perry\Files\Storage;
+use Perry\SwaggerGenerator\Cache\FindUsedSecurityScheme;
 use Perry\SwaggerGenerator\Cache\GenerateSwaggerRootData;
 use Perry\SwaggerGenerator\Cache\SaveSwaggerSecuritySchemeIfExists;
 use Perry\SwaggerGenerator\Cache\TestRequestDtoGenerator;
@@ -30,7 +31,8 @@ readonly class PerryHttpRequestExecutor
         $response = $this->testCase->post($uri, $data, $headers);
         (new GenerateSwaggerRootData())->execute();
         (new SaveSwaggerSecuritySchemeIfExists())->execute();
-        $testRequestDto = TestRequestDtoGenerator::generate('post', $uri, $data, $headers, $response);
+        $usedSecurityScheme = (new FindUsedSecurityScheme())->execute();
+        $testRequestDto = TestRequestDtoGenerator::generate('post', $uri, $data, $headers, $response, $usedSecurityScheme);
         Storage::saveTestRequest($testRequestDto);
 
         return $response;

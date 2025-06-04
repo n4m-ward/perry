@@ -13,7 +13,8 @@ class TestRequestDtoGenerator
         string $uri,
         array $data,
         array $headers,
-        TestResponse $response
+        TestResponse $response,
+        array $usedSecurityScheme = [],
     ): TestRequestDto {
         return new TestRequestDto(
             testName: TestInfoResolver::resolve()->method,
@@ -24,6 +25,7 @@ class TestRequestDtoGenerator
             query: [],
             body: $data,
             response: $response->getContent(),
+            usedSecurityScheme: $usedSecurityScheme
         );
     }
 }
