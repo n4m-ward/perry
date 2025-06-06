@@ -2,6 +2,9 @@
 
 namespace Tests\SwaggerGenerator;
 
+use Perry\Attributes\SecurityScheme\SecurityScheme;
+use Perry\Attributes\SecurityScheme\UseSecurityScheme;
+use Perry\Exceptions\PerryAttributeNotFoundException;
 use Tests\Base\RemoveSwaggerAfterTests;
 use Illuminate\Http\Request;
 use Perry\Exceptions\PerryException;
@@ -12,6 +15,7 @@ use Perry\SwaggerGenerator\SwaggerGenerator;
 use ReflectionException;
 use Tests\Base\BaseTestCase;
 
+#[SecurityScheme(securityScheme: 'BearerToken', type: 'http', in: 'header', name: 'Authorization', scheme: 'bearer')]
 class SwaggerGeneratorTest extends BaseTestCase
 {
     use RemoveSwaggerAfterTests;
@@ -82,6 +86,55 @@ class SwaggerGeneratorTest extends BaseTestCase
 
     }
 
+
+    /**
+     * @throws PerryStorageException
+     * @throws PerryInfoAttributeNotFoundException
+     * @throws ReflectionException
+     * @throws PerryException
+     */
+    #[UseSecurityScheme('Bearer')]
+    public function test_generateDocAndSaveOnCache_shouldThrowExceptionWhenTestAreUsingSecurityScheme_ButBaseClassDoesNotHaveSecuritySchemeAttribute(): void
+    {
+        $this->expectException(PerryAttributeNotFoundException::class);
+        $this->expectExceptionMessage('SecurityScheme [Bearer] was not implemented');
+
+        $request = new Request(
+            server: [
+                'REQUEST_URI' => '/api/expected/endpoint'
+            ]
+        );
+        $request->setMethod('POST');
+        $response = response()->json();
+
+        $this->swaggerGenerator->generateDocAndSaveOnCache([$request], $response);
+    }
+
+
+    /**
+     * @throws PerryStorageException
+     * @throws PerryInfoAttributeNotFoundException
+     * @throws ReflectionException
+     * @throws PerryException
+     */
+    #[UseSecurityScheme('BearerToken')]
+    public function test_generateDocAndSaveOnCache_shouldGenerateDocWithSecurityScheme(): void
+    {
+        $request = new Request(
+            server: [
+                'REQUEST_URI' => '/api/expected/endpoint'
+            ]
+        );
+        $request->setMethod('POST');
+        $response = response()->json();
+
+        $this->swaggerGenerator->generateDocAndSaveOnCache([$request], $response);
+        $requestDto = Storage::getSingleTestRequest('api/expected/endpoint', 'POST', 200);
+
+        $this->assertEquals('BearerToken', $requestDto->usedSecurityScheme[0]->securityScheme);
+        $this->assertEquals([], $requestDto->usedSecurityScheme[0]->scopes);
+    }
+
     /**
      * @throws ReflectionException
      * @throws PerryInfoAttributeNotFoundException
@@ -100,10 +153,72 @@ info:
     description: 'Example server description'
 paths:
     /: { get: { summary: 'generate swagger from cache files should generate a yaml with root info', description: 'generate swagger from cache files should generate a yaml with root info', operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfo, responses: { 200: { description: '200', content: { application/json: { schema: {  } } } } } } }
+components:
+    securitySchemes: { BearerToken: { type: http, in: header, name: Authorization, scheme: bearer } }
 
 YAML;
 
         $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json()); // to generate the basic route info
+        $this->swaggerGenerator->generateSwaggerFromCacheFiles();
+
+        $documentation = Storage::getSwaggerDoc();
+
+        $this->assertEquals($expectedDocumentation, $documentation);
+    }
+
+    /**
+     * @throws ReflectionException
+     * @throws PerryInfoAttributeNotFoundException
+     * @throws PerryStorageException
+     */
+    public function test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndSecurityScheme(): void
+    {
+        $expectedDocumentation = <<<YAML
+openapi: 3.0.0
+servers:
+    - { description: 'Server 1', url: 'https://server1.com' }
+    - { description: 'Server 2', url: 'https://server2.com' }
+info:
+    version: 1.0.0
+    title: 'Example server title'
+    description: 'Example server description'
+paths:
+    /: { get: { summary: 'generate swagger from cache files should generate a yaml with root info and security scheme', description: 'generate swagger from cache files should generate a yaml with root info and security scheme', operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndSecurityScheme, responses: { 200: { description: '200', content: { application/json: { schema: {  } } } } } } }
+components:
+    securitySchemes: { BearerToken: { type: http, in: header, name: Authorization, scheme: bearer } }
+
+YAML;
+
+        Storage::saveSecuritySchemes([new SecurityScheme(securityScheme: 'BearerToken', type: 'http', in: 'header', name: 'Authorization', scheme: 'bearer')]);
+
+        $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json());
+        $this->swaggerGenerator->generateSwaggerFromCacheFiles();
+
+        $documentation = Storage::getSwaggerDoc();
+
+        $this->assertEquals($expectedDocumentation, $documentation);
+    }
+
+    #[UseSecurityScheme('BearerToken')]
+    public function test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndUsedSecurityScheme(): void
+    {
+        $expectedDocumentation = <<<YAML
+openapi: 3.0.0
+servers:
+    - { description: 'Server 1', url: 'https://server1.com' }
+    - { description: 'Server 2', url: 'https://server2.com' }
+info:
+    version: 1.0.0
+    title: 'Example server title'
+    description: 'Example server description'
+paths:
+    /: { get: { summary: 'generate swagger from cache files should generate a yaml with root info and used security scheme', description: 'generate swagger from cache files should generate a yaml with root info and used security scheme', operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndUsedSecurityScheme, responses: { 200: { description: '200', content: { application/json: { schema: {  } } } } }, security: [{ BearerToken: {  } }] } }
+components:
+    securitySchemes: { BearerToken: { type: http, in: header, name: Authorization, scheme: bearer } }
+
+YAML;
+
+        $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json());
         $this->swaggerGenerator->generateSwaggerFromCacheFiles();
 
         $documentation = Storage::getSwaggerDoc();
