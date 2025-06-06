@@ -2,7 +2,7 @@
 
 namespace Perry\Attributes\SecurityScheme;
 
-#[\Attribute]
+#[\Attribute(\Attribute::TARGET_CLASS)]
 class SecurityScheme
 {
     public function __construct(
