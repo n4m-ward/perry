@@ -210,6 +210,24 @@ public function test_delete(): void
 }
 ```
 
+### Using securityScheme
+
+First, on your TestCase or your BaseTestCase, add the following attribute
+
+```php
+#[SecurityScheme(securityScheme: 'BearerToken', type: 'http', scheme: 'bearer')]
+class SomeTest extends BaseTestCase {}
+```
+
+Then, on your test method, add the following attribute
+
+```php
+#[UseSecurityScheme('BearerToken')]
+public function test_shouldCreateUser(): void
+{
+}
+```
+
 # Doing assertions
 
 - **The method `perryHttp()` will return an `Illuminate\Testing\TestResponse`**
