@@ -25,7 +25,7 @@ class DummyControllerTest extends BaseTestCase
 
         $this
             ->perryHttp()
-            ->withHeaders([
+            ->withBody([
                 'name' => 'John Doe',
                 'age' => 25,
                 'email' => 'john@doe.com',
