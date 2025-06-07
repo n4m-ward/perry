@@ -4,6 +4,7 @@ namespace Tests\Base;
 
 use Illuminate\Foundation\Testing\Concerns\MakesHttpRequests;
 use Orchestra\Testbench\TestCase;
+use Perry\Attributes\ExternalDocs;
 use Perry\Attributes\Info;
 use Perry\Attributes\Server;
 use Perry\Attributes\Servers;
@@ -18,6 +19,12 @@ use Perry\UnitTest\ProjectExecutionModeOverride;
     version: '1.0.0',
     title: 'Example server title',
     description: 'Example server description',
+    contactEmail: 'test@example.com',
+    termsOfService: 'https://example.com/terms-of-service',
+    externalDocs: new ExternalDocs(
+        url: 'https://example.com/external-docs',
+        description: 'Find more info here',
+    ),
 )]
 class BaseTestCase extends TestCase
 {

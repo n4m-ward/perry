@@ -151,6 +151,11 @@ info:
     version: 1.0.0
     title: 'Example server title'
     description: 'Example server description'
+    contact: { email: test@example.com }
+    termsOfService: 'https://example.com/terms-of-service'
+externalDocs:
+    description: 'Find more info here'
+    url: 'https://example.com/external-docs'
 paths:
     /: { get: { summary: 'generate swagger from cache files should generate a yaml with root info', description: 'generate swagger from cache files should generate a yaml with root info', operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfo, responses: { 200: { description: '200', content: { application/json: { schema: {  } } } } } } }
 components:
@@ -182,6 +187,11 @@ info:
     version: 1.0.0
     title: 'Example server title'
     description: 'Example server description'
+    contact: { email: test@example.com }
+    termsOfService: 'https://example.com/terms-of-service'
+externalDocs:
+    description: 'Find more info here'
+    url: 'https://example.com/external-docs'
 paths:
     /: { get: { summary: 'generate swagger from cache files should generate a yaml with root info and security scheme', description: 'generate swagger from cache files should generate a yaml with root info and security scheme', operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndSecurityScheme, responses: { 200: { description: '200', content: { application/json: { schema: {  } } } } } } }
 components:
@@ -211,6 +221,11 @@ info:
     version: 1.0.0
     title: 'Example server title'
     description: 'Example server description'
+    contact: { email: test@example.com }
+    termsOfService: 'https://example.com/terms-of-service'
+externalDocs:
+    description: 'Find more info here'
+    url: 'https://example.com/external-docs'
 paths:
     /: { get: { summary: 'generate swagger from cache files should generate a yaml with root info and used security scheme', description: 'generate swagger from cache files should generate a yaml with root info and used security scheme', operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndUsedSecurityScheme, responses: { 200: { description: '200', content: { application/json: { schema: {  } } } } }, security: [{ BearerToken: {  } }] } }
 components:
