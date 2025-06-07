@@ -64,6 +64,21 @@ class GenerateSwaggerFromCacheFiles
             'description' => $rootInfo->info->description,
         ];
 
+        if($rootInfo->info->contactEmail) {
+            $output['info']['contact'] = [
+                'email' => $rootInfo->info->contactEmail,
+            ];
+        }
+        if($rootInfo->info->termsOfService) {
+            $output['info']['termsOfService'] = $rootInfo->info->termsOfService;
+        }
+        if($rootInfo->info->externalDocs) {
+            $output['externalDocs'] = [
+                'description' => $rootInfo->info->externalDocs->description,
+                'url' => $rootInfo->info->externalDocs->url,
+            ];
+        }
+
         return $output;
     }
 
