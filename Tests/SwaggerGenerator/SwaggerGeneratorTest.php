@@ -143,23 +143,45 @@ class SwaggerGeneratorTest extends BaseTestCase
     public function test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfo(): void
     {
         $expectedDocumentation = <<<YAML
+---
 openapi: 3.0.0
 servers:
-    - { description: 'Server 1', url: 'https://server1.com' }
-    - { description: 'Server 2', url: 'https://server2.com' }
+- description: Server 1
+  url: https://server1.com
+- description: Server 2
+  url: https://server2.com
 info:
-    version: 1.0.0
-    title: 'Example server title'
-    description: 'Example server description'
-    contact: { email: test@example.com }
-    termsOfService: 'https://example.com/terms-of-service'
+  version: 1.0.0
+  title: Example server title
+  description: Example server description
+  contact:
+    email: test@example.com
+  termsOfService: https://example.com/terms-of-service
 externalDocs:
-    description: 'Find more info here'
-    url: 'https://example.com/external-docs'
+  description: Find more info here
+  url: https://example.com/external-docs
 paths:
-    /: { get: { summary: 'generate swagger from cache files should generate a yaml with root info', description: 'generate swagger from cache files should generate a yaml with root info', operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfo, responses: { 200: { description: '200', content: { application/json: { schema: {  } } } } } } }
+  /:
+    get:
+      summary: generate swagger from cache files should generate a yaml with root
+        info
+      description: generate swagger from cache files should generate a yaml with root
+        info
+      operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfo
+      responses:
+        200:
+          description: "200"
+          content:
+            application/json:
+              schema: []
 components:
-    securitySchemes: { BearerToken: { type: http, in: header, name: Authorization, scheme: bearer } }
+  securitySchemes:
+    BearerToken:
+      type: http
+      in: header
+      name: Authorization
+      scheme: bearer
+...
 
 YAML;
 
@@ -179,23 +201,45 @@ YAML;
     public function test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndSecurityScheme(): void
     {
         $expectedDocumentation = <<<YAML
+---
 openapi: 3.0.0
 servers:
-    - { description: 'Server 1', url: 'https://server1.com' }
-    - { description: 'Server 2', url: 'https://server2.com' }
+- description: Server 1
+  url: https://server1.com
+- description: Server 2
+  url: https://server2.com
 info:
-    version: 1.0.0
-    title: 'Example server title'
-    description: 'Example server description'
-    contact: { email: test@example.com }
-    termsOfService: 'https://example.com/terms-of-service'
+  version: 1.0.0
+  title: Example server title
+  description: Example server description
+  contact:
+    email: test@example.com
+  termsOfService: https://example.com/terms-of-service
 externalDocs:
-    description: 'Find more info here'
-    url: 'https://example.com/external-docs'
+  description: Find more info here
+  url: https://example.com/external-docs
 paths:
-    /: { get: { summary: 'generate swagger from cache files should generate a yaml with root info and security scheme', description: 'generate swagger from cache files should generate a yaml with root info and security scheme', operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndSecurityScheme, responses: { 200: { description: '200', content: { application/json: { schema: {  } } } } } } }
+  /:
+    get:
+      summary: generate swagger from cache files should generate a yaml with root
+        info and security scheme
+      description: generate swagger from cache files should generate a yaml with root
+        info and security scheme
+      operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndSecurityScheme
+      responses:
+        200:
+          description: "200"
+          content:
+            application/json:
+              schema: []
 components:
-    securitySchemes: { BearerToken: { type: http, in: header, name: Authorization, scheme: bearer } }
+  securitySchemes:
+    BearerToken:
+      type: http
+      in: header
+      name: Authorization
+      scheme: bearer
+...
 
 YAML;
 
@@ -213,23 +257,47 @@ YAML;
     public function test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndUsedSecurityScheme(): void
     {
         $expectedDocumentation = <<<YAML
+---
 openapi: 3.0.0
 servers:
-    - { description: 'Server 1', url: 'https://server1.com' }
-    - { description: 'Server 2', url: 'https://server2.com' }
+- description: Server 1
+  url: https://server1.com
+- description: Server 2
+  url: https://server2.com
 info:
-    version: 1.0.0
-    title: 'Example server title'
-    description: 'Example server description'
-    contact: { email: test@example.com }
-    termsOfService: 'https://example.com/terms-of-service'
+  version: 1.0.0
+  title: Example server title
+  description: Example server description
+  contact:
+    email: test@example.com
+  termsOfService: https://example.com/terms-of-service
 externalDocs:
-    description: 'Find more info here'
-    url: 'https://example.com/external-docs'
+  description: Find more info here
+  url: https://example.com/external-docs
 paths:
-    /: { get: { summary: 'generate swagger from cache files should generate a yaml with root info and used security scheme', description: 'generate swagger from cache files should generate a yaml with root info and used security scheme', operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndUsedSecurityScheme, responses: { 200: { description: '200', content: { application/json: { schema: {  } } } } }, security: [{ BearerToken: {  } }] } }
+  /:
+    get:
+      summary: generate swagger from cache files should generate a yaml with root
+        info and used security scheme
+      description: generate swagger from cache files should generate a yaml with root
+        info and used security scheme
+      operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndUsedSecurityScheme
+      responses:
+        200:
+          description: "200"
+          content:
+            application/json:
+              schema: []
+      security:
+      - BearerToken: []
 components:
-    securitySchemes: { BearerToken: { type: http, in: header, name: Authorization, scheme: bearer } }
+  securitySchemes:
+    BearerToken:
+      type: http
+      in: header
+      name: Authorization
+      scheme: bearer
+...
 
 YAML;
 
