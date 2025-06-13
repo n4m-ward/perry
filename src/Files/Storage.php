@@ -106,7 +106,7 @@ class Storage
 
     public static function saveSwaggerDoc(array $docArray): void
     {
-        $docYaml = Yaml::dump($docArray);
+        $docYaml = yaml_emit($docArray);
         if(!is_dir(StoragePathResolver::resolveDocumentationFolder())) {
             mkdir(StoragePathResolver::resolveDocumentationFolder());
         }

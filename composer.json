@@ -24,6 +24,6 @@
         }
     ],
     "require": {
-        "symfony/yaml": "^6.0 || ^7.0"
+        "ext-yaml": "*"
     }
 }
