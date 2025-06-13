@@ -2,8 +2,6 @@
 
 namespace Perry\Attributes;
 
-use Attribute;
-
 #[\Attribute]
 readonly class Info
 {
@@ -11,6 +9,9 @@ readonly class Info
         public string $version,
         public string $title,
         public string $description,
+        public ?string $contactEmail = null,
+        public ?string $termsOfService = null, // set null to don't break the old versions
+        public ?ExternalDocs $externalDocs = null,
     ) {
     }
 }

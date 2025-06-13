@@ -3,16 +3,20 @@
 namespace PerryTest\Perry;
 
 use Illuminate\Support\Facades\Route;
+use Perry\Attributes\SecurityScheme\SecurityScheme;
+use Perry\Attributes\SecurityScheme\UseSecurityScheme;
 use Perry\PerryHttp\PerryHttpRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Base\BaseTestCase;
 use Tests\Dummy\DummyController;
 use Tests\Dummy\DummyControllerMock;
 
+#[SecurityScheme(securityScheme: 'BearerToken', type: 'http', scheme: 'bearer')]
 class DummyControllerTest extends BaseTestCase
 {
     use PerryHttpRequest;
 
+    #[UseSecurityScheme('BearerToken')]
     public function test_shouldCreateUser(): void
     {
         Route::post('/user', [DummyController::class, 'dummyRequest']);
@@ -21,7 +25,7 @@ class DummyControllerTest extends BaseTestCase
 
         $this
             ->perryHttp()
-            ->withHeaders([
+            ->withBody([
                 'name' => 'John Doe',
                 'age' => 25,
                 'email' => 'john@doe.com',

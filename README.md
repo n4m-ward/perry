@@ -60,6 +60,12 @@ use Illuminate\Foundation\Testing\TestCase as LaravelTestCase;
     version: '1.0.0',
     title: 'Example server title',
     description: 'Example server description',
+    contactEmail: 'test@example.com',
+    termsOfService: 'https://example.com/terms-of-service', // optional parameter
+    externalDocs: new ExternalDocs( // optional parameter
+        url: 'https://example.com/external-docs',
+        description: 'Find more info here',
+    ),
 )]
 abstract class BaseTestCase extends LaravelTestCase
 {
@@ -112,9 +118,14 @@ openapi: 3.0.0
 servers:
     - { description: 'Server Local', url: 'http://localhost:8080' }
 info:
-    version: 1.0.0
-    title: 'Example server title'
-    description: 'Example server description'
+  version: 1.0.0
+  title: 'Example server title'
+  description: 'Example server description'
+  contact: { email: test@example.com }
+  termsOfService: 'https://example.com/terms-of-service'
+externalDocs:
+  description: 'Find more info here'
+  url: 'https://example.com/external-docs'
 paths:
     /user: { post: { summary: 'should create user', description: 'should create user', operationId: test_shouldCreateUser, responses: { 201: { description: '201', content: { application/json: { schema: { type: object, properties: { success: { type: boolean, example: true } } } } } } }, requestBody: { description: 'should create user', content: { application/json: { schema: { type: object, properties: { name: { type: string, example: 'John Doe' }, age: { type: integer, format: int32, example: 25 }, email: { type: string, example: john@doe.com }, password: { type: string, example: password } } } } } } } }
 
@@ -207,6 +218,24 @@ public function test_patch(): void
 public function test_delete(): void
 {
     $this->perryHttp()->delete('/api/example/123');
+}
+```
+
+### Using securityScheme
+
+First, on your TestCase or your BaseTestCase, add the following attribute
+
+```php
+#[SecurityScheme(securityScheme: 'BearerToken', type: 'http', scheme: 'bearer')]
+class SomeTest extends BaseTestCase {}
+```
+
+Then, on your test method, add the following attribute
+
+```php
+#[UseSecurityScheme('BearerToken')]
+public function test_shouldCreateUser(): void
+{
 }
 ```
 

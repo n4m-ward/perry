@@ -70,6 +70,7 @@ JSON;
 
 namespace Tests\Perry;
 
+use Perry\Attributes\ExternalDocs;
 use Perry\Attributes\Info;
 use Perry\Attributes\Server;
 use Perry\Attributes\Servers;
@@ -83,6 +84,12 @@ use Illuminate\Foundation\Testing\TestCase as LaravelTestCase;
     version: '1.0.0',
     title: 'Example server title',
     description: 'Example server description',
+    contactEmail: 'test@example.com',
+    termsOfService: 'https://example.com/terms-of-service',
+    externalDocs: new ExternalDocs(
+        url: 'https://example.com/external-docs',
+        description: 'Find more info here',
+    ),
 )]
 abstract class BaseTestCase extends LaravelTestCase
 {
