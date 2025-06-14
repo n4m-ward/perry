@@ -31,13 +31,6 @@ tags:
     description: Find more info here
     url: https://example.com/external-docs
 $paths
-components:
-  securitySchemes:
-    BearerToken:
-      type: http
-      in: header
-      name: Authorization
-      scheme: bearer
 ...
 
 YAML;
