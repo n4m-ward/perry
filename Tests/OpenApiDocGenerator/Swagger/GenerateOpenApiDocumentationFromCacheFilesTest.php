@@ -4,23 +4,23 @@ namespace Tests\OpenApiDocGenerator\Swagger;
 
 use Perry\Files\Storage;
 use Perry\PerryHttp\PerryHttpRequest;
-use Perry\OpenApiDocGenerator\OpenApi\GenerateSwaggerFromCacheFiles;
+use Perry\OpenApiDocGenerator\OpenApi\GenerateOpenApiDocumentationFromCacheFiles;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Base\BaseTestCase;
 use Tests\Base\RemoveSwaggerAfterTests;
 use Tests\TestHelpers\OpenApiDocPayload;
 
-class GenerateSwaggerFromCacheFilesTest extends BaseTestCase
+class GenerateOpenApiDocumentationFromCacheFilesTest extends BaseTestCase
 {
     use PerryHttpRequest;
     use RemoveSwaggerAfterTests;
 
-    private GenerateSwaggerFromCacheFiles $generateSwaggerFromCacheFiles;
+    private GenerateOpenApiDocumentationFromCacheFiles $generateSwaggerFromCacheFiles;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->generateSwaggerFromCacheFiles = new GenerateSwaggerFromCacheFiles();
+        $this->generateSwaggerFromCacheFiles = new GenerateOpenApiDocumentationFromCacheFiles();
     }
 
     public function test_shouldGenerateSwagger(): void

@@ -12,22 +12,22 @@ use Perry\Exceptions\PerryException;
 use Perry\Exceptions\PerryInfoAttributeNotFoundException;
 use Perry\Exceptions\PerryStorageException;
 use Perry\Files\Storage;
-use Perry\OpenApiDocGenerator\SwaggerGenerator;
+use Perry\OpenApiDocGenerator\OpenApiGenerator;
 use ReflectionException;
 use Tests\Base\BaseTestCase;
 use Tests\TestHelpers\OpenApiDocPayload;
 
 #[SecurityScheme(securityScheme: 'BearerToken', type: 'http', in: 'header', name: 'Authorization', scheme: 'bearer')]
-class SwaggerGeneratorTest extends BaseTestCase
+class OpenApiGeneratorTest extends BaseTestCase
 {
     use RemoveSwaggerAfterTests;
 
-    private SwaggerGenerator $swaggerGenerator;
+    private OpenApiGenerator $swaggerGenerator;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->swaggerGenerator = new SwaggerGenerator();
+        $this->swaggerGenerator = new OpenApiGenerator();
     }
 
     /**
@@ -170,7 +170,7 @@ YAML);
 
 
         $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json()); // to generate the basic route info
-        $this->swaggerGenerator->generateSwaggerFromCacheFiles();
+        $this->swaggerGenerator->GenerateOpenApiDocumentationFromCacheFiles();
 
         $documentation = Storage::getSwaggerDoc();
 
@@ -212,7 +212,7 @@ YAML);
         Storage::saveSecuritySchemes([new SecurityScheme(securityScheme: 'BearerToken', type: 'http', in: 'header', name: 'Authorization', scheme: 'bearer')]);
 
         $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json());
-        $this->swaggerGenerator->generateSwaggerFromCacheFiles();
+        $this->swaggerGenerator->GenerateOpenApiDocumentationFromCacheFiles();
 
         $documentation = Storage::getSwaggerDoc();
 
@@ -250,7 +250,7 @@ YAML);
 
 
         $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json());
-        $this->swaggerGenerator->generateSwaggerFromCacheFiles();
+        $this->swaggerGenerator->GenerateOpenApiDocumentationFromCacheFiles();
 
         $documentation = Storage::getSwaggerDoc();
 
@@ -286,7 +286,7 @@ components:
       scheme: bearer
 YAML);
         $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json());
-        $this->swaggerGenerator->generateSwaggerFromCacheFiles();
+        $this->swaggerGenerator->GenerateOpenApiDocumentationFromCacheFiles();
 
         $documentation = Storage::getSwaggerDoc();
 

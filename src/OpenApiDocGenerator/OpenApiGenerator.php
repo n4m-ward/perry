@@ -14,10 +14,10 @@ use Perry\OpenApiDocGenerator\Cache\FindUsedTags;
 use Perry\OpenApiDocGenerator\Cache\SaveOpenApiRootDataOnCache;
 use Perry\OpenApiDocGenerator\Cache\SaveOpenApiSecuritySchemeOnCacheIfExists;
 use Perry\OpenApiDocGenerator\Cache\SaveTagsOnCacheIfExists;
-use Perry\OpenApiDocGenerator\OpenApi\GenerateSwaggerFromCacheFiles;
+use Perry\OpenApiDocGenerator\OpenApi\GenerateOpenApiDocumentationFromCacheFiles;
 use Symfony\Component\HttpFoundation\Response;
 
-class SwaggerGenerator
+class OpenApiGenerator
 {
     /**
      * @throws \ReflectionException
@@ -67,8 +67,8 @@ class SwaggerGenerator
     /**
      * @throws PerryStorageException
      */
-    public function generateSwaggerFromCacheFiles(): void
+    public function GenerateOpenApiDocumentationFromCacheFiles(): void
     {
-        (new GenerateSwaggerFromCacheFiles())->execute();
+        (new GenerateOpenApiDocumentationFromCacheFiles())->execute();
     }
 }

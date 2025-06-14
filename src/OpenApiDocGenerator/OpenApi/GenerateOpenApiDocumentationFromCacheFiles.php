@@ -5,7 +5,7 @@ namespace Perry\OpenApiDocGenerator\OpenApi;
 use Perry\Exceptions\PerryStorageException;
 use Perry\Files\Storage;
 
-class GenerateSwaggerFromCacheFiles
+class GenerateOpenApiDocumentationFromCacheFiles
 {
     /**
      * @throws PerryStorageException
