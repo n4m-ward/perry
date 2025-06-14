@@ -5,7 +5,7 @@ namespace Perry\OpenApiDocGenerator\OpenApi;
 use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Files\Storage;
 
-class GenerateSecurityScheme
+class GetSecuritySchemesFromCache
 {
     public function execute(): array
     {

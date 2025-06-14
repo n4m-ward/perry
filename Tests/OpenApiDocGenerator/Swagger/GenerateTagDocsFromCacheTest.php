@@ -4,20 +4,20 @@ namespace Tests\OpenApiDocGenerator\Swagger;
 
 use Perry\Attributes\Tag\Tag;
 use Perry\Files\Storage;
-use Perry\OpenApiDocGenerator\OpenApi\GenerateTagDocs;
+use Perry\OpenApiDocGenerator\OpenApi\GenerateTagDocsFromCache;
 use Tests\Base\BaseTestCase;
 use Tests\Base\RemoveSwaggerAfterTests;
 
-class GenerateTagDocsTest extends BaseTestCase
+class GenerateTagDocsFromCacheTest extends BaseTestCase
 {
     use RemoveSwaggerAfterTests;
 
-    private GenerateTagDocs $generateTagDocs;
+    private GenerateTagDocsFromCache $generateTagDocs;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->generateTagDocs = new GenerateTagDocs();
+        $this->generateTagDocs = new GenerateTagDocsFromCache();
     }
 
     public function test_shouldGenerateTagDocs(): void

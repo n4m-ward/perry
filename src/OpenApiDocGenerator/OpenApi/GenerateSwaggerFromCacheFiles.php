@@ -15,7 +15,7 @@ class GenerateSwaggerFromCacheFiles
         try {
             $output = $this->generateRootInfo();
 
-            $tags = (new GenerateTagDocs())->execute();
+            $tags = (new GenerateTagDocsFromCache())->execute();
             if(!empty($tags)) {
                 $output['tags'] = $tags;
             }
@@ -37,7 +37,7 @@ class GenerateSwaggerFromCacheFiles
     private function parseFoldersToRequestDto(array $folders): array
     {
         $output = [];
-        $parseEndpoint = new ParseEndpointToSwaggerDocumentation();
+        $parseEndpoint = new ParseEndpointToOpenApiDocumentation();
 
         foreach ($folders as $folder) {
             $endpoint = $this->getEndpointFromFolderName($folder);
@@ -90,7 +90,7 @@ class GenerateSwaggerFromCacheFiles
     private function getComponents(): array
     {
         $output = [];
-        $securitySchemes = (new GenerateSecurityScheme)->execute();
+        $securitySchemes = (new GetSecuritySchemesFromCache)->execute();
         if(!empty($securitySchemes)) {
             $output['securitySchemes'] = $securitySchemes;
         }

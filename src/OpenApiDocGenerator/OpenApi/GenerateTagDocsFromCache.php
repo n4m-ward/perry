@@ -5,7 +5,7 @@ namespace Perry\OpenApiDocGenerator\OpenApi;
 use Perry\Attributes\Tag\Tag;
 use Perry\Files\Storage;
 
-class GenerateTagDocs
+class GenerateTagDocsFromCache
 {
     public function execute(): array
     {

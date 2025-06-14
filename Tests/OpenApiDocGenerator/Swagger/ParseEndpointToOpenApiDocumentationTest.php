@@ -3,22 +3,22 @@
 namespace Tests\OpenApiDocGenerator\Swagger;
 
 use Perry\PerryHttp\PerryHttpRequest;
-use Perry\OpenApiDocGenerator\OpenApi\ParseEndpointToSwaggerDocumentation;
+use Perry\OpenApiDocGenerator\OpenApi\ParseEndpointToOpenApiDocumentation;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Base\BaseTestCase;
 use Tests\Base\RemoveSwaggerAfterTests;
 
-class ParseEndpointToSwaggerDocumentationTest extends BaseTestCase
+class ParseEndpointToOpenApiDocumentationTest extends BaseTestCase
 {
     use PerryHttpRequest;
     use RemoveSwaggerAfterTests;
 
-    private ParseEndpointToSwaggerDocumentation $parseEndpointToSwaggerDocumentation;
+    private ParseEndpointToOpenApiDocumentation $parseEndpointToSwaggerDocumentation;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->parseEndpointToSwaggerDocumentation = new ParseEndpointToSwaggerDocumentation();
+        $this->parseEndpointToSwaggerDocumentation = new ParseEndpointToOpenApiDocumentation();
     }
 
     public function test_shouldParseEndpointToOpenApiDocumentation(): void

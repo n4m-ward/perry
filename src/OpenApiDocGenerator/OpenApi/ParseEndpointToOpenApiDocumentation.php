@@ -7,7 +7,7 @@ use Perry\Files\Storage;
 use Perry\OpenApiDocGenerator\Cache\Dtos\TestRequestDto;
 use Perry\OpenApiDocGenerator\Helper\SwaggerObjectHelper;
 
-class ParseEndpointToSwaggerDocumentation
+class ParseEndpointToOpenApiDocumentation
 {
     public function execute(string $endpoint): array
     {
