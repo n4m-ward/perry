@@ -29,7 +29,7 @@ class ParseEndpointToOpenApiDocumentationTest extends BaseTestCase
         $parsedEndpoint = $this->parseEndpointToSwaggerDocumentation->execute('_test');
 
         $this->assertEquals([
-            "post" => [
+            "get" => [
                 "summary" => "should parse endpoint to open api documentation",
                 "description" => "should parse endpoint to open api documentation",
                 "operationId" => "test_shouldParseEndpointToOpenApiDocumentation",

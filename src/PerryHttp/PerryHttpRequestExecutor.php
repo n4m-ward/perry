@@ -27,7 +27,7 @@ readonly class PerryHttpRequestExecutor
     {
         $response = $this->testCase->post($uri, $data, $headers);
 
-        (new SaveRequestOnCache)->execute($uri, $data, $headers, $response);
+        (new SaveRequestOnCache)->execute('post', $uri, $data, $headers, $response);
 
         return $response;
     }
@@ -39,7 +39,7 @@ readonly class PerryHttpRequestExecutor
     public function execGet($uri, array $headers = []): TestResponse
     {
         $response = $this->testCase->get($uri, $headers);
-        (new SaveRequestOnCache)->execute($uri, [], $headers, $response);
+        (new SaveRequestOnCache)->execute('get', $uri, [], $headers, $response);
 
         return $response;
     }
@@ -51,7 +51,7 @@ readonly class PerryHttpRequestExecutor
     public function execPut($uri, array $data = [], array $headers = []): TestResponse
     {
         $response = $this->testCase->put($uri, $data, $headers);
-        (new SaveRequestOnCache)->execute($uri, $data, $headers, $response);
+        (new SaveRequestOnCache)->execute('put', $uri, $data, $headers, $response);
 
         return $response;
     }
@@ -63,7 +63,7 @@ readonly class PerryHttpRequestExecutor
     public function execPatch($uri, array $data = [], array $headers = []): TestResponse
     {
         $response = $this->testCase->patch($uri, $data, $headers);
-        (new SaveRequestOnCache)->execute($uri, $data, $headers, $response);
+        (new SaveRequestOnCache)->execute('patch', $uri, $data, $headers, $response);
 
         return $response;
     }
@@ -75,7 +75,7 @@ readonly class PerryHttpRequestExecutor
     public function execDelete($uri, array $data = [], array $headers = []): TestResponse
     {
         $response = $this->testCase->delete($uri, $data, $headers);
-        (new SaveRequestOnCache)->execute($uri, $data, $headers, $response);
+        (new SaveRequestOnCache)->execute('delete', $uri, $data, $headers, $response);
 
         return $response;
     }
