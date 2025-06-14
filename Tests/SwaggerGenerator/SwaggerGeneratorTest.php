@@ -4,6 +4,7 @@ namespace Tests\SwaggerGenerator;
 
 use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Attributes\SecurityScheme\UseSecurityScheme;
+use Perry\Attributes\Tag\UsingTag;
 use Perry\Exceptions\PerryAttributeNotFoundException;
 use Tests\Base\RemoveSwaggerAfterTests;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ use Tests\Base\BaseTestCase;
 #[SecurityScheme(securityScheme: 'BearerToken', type: 'http', in: 'header', name: 'Authorization', scheme: 'bearer')]
 class SwaggerGeneratorTest extends BaseTestCase
 {
-    use RemoveSwaggerAfterTests;
+//    use RemoveSwaggerAfterTests;
 
     private SwaggerGenerator $swaggerGenerator;
 
@@ -297,6 +298,68 @@ components:
       in: header
       name: Authorization
       scheme: bearer
+...
+
+YAML;
+
+        $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json());
+        $this->swaggerGenerator->generateSwaggerFromCacheFiles();
+
+        $documentation = Storage::getSwaggerDoc();
+
+        $this->assertEquals($expectedDocumentation, $documentation);
+    }
+
+    #[UsingTag('Tag 1')]
+    public function test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndTags(): void
+    {
+        $expectedDocumentation = <<<YAML
+---
+openapi: 3.0.0
+servers:
+- description: Server 1
+  url: https://server1.com
+- description: Server 2
+  url: https://server2.com
+info:
+  version: 1.0.0
+  title: Example server title
+  description: Example server description
+  contact:
+    email: test@example.com
+  termsOfService: https://example.com/terms-of-service
+externalDocs:
+  description: Find more info here
+  url: https://example.com/external-docs
+paths:
+  /:
+    get:
+      summary: generate swagger from cache files should generate a yaml with root
+        info and tags
+      description: generate swagger from cache files should generate a yaml with root
+        info and tags
+      operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndTags
+      responses:
+        200:
+          description: "200"
+          content:
+            application/json:
+              schema: []
+      tags:
+      - Tag 1
+components:
+  securitySchemes:
+    BearerToken:
+      type: http
+      in: header
+      name: Authorization
+      scheme: bearer
+tags:
+- name: Tag 1
+  description: Tag 1 description
+  externalDocs:
+    description: Find more info here
+    url: https://example.com/external-docs
 ...
 
 YAML;

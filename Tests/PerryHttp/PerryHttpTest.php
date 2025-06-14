@@ -3,6 +3,7 @@
 namespace Tests\PerryHttp;
 
 use Illuminate\Support\Facades\Route;
+use Perry\Attributes\Tag\UsingTag;
 use Perry\PerryHttp\PerryHttpRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Base\BaseTestCase;
@@ -15,6 +16,7 @@ class PerryHttpTest extends BaseTestCase
     use PerryHttpRequest;
     use RemoveSwaggerAfterTests;
 
+    #[UsingTag('Tag 1')]
     public function test_shouldPost_withHeadersAndBody(): void
     {
         Route::post('/user', [DummyController::class, 'dummyRequest']);

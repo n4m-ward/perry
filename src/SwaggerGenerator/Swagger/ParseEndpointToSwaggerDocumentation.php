@@ -25,7 +25,6 @@ class ParseEndpointToSwaggerDocumentation
         $requestList = $this->getRequestList($endpoint, $method);
         $requestWithLessStatusCode = $this->findRequestWithLessStatusCode($requestList);
         $requestDescription = $this->formatTestNameToRequestDescription($requestWithLessStatusCode->testName);
-
         $output = [
             'summary' => $requestDescription,
             'description' => $requestDescription,
@@ -34,6 +33,11 @@ class ParseEndpointToSwaggerDocumentation
         ];
         if($requestWithLessStatusCode->usedSecurityScheme) {
             $output['security'] = $this->formatSecurity($requestWithLessStatusCode->usedSecurityScheme);
+        }
+
+        $tags = $this->getTagsFromRequest($requestList);
+        if(!empty($tags)) {
+            $output['tags'] = $tags;
         }
 
         if(!empty($requestWithLessStatusCode->body)) {
@@ -87,6 +91,23 @@ class ParseEndpointToSwaggerDocumentation
             $output[(string) $response->statusCode] = $response->response;
         }
 
+        return $output;
+    }
+
+    /**
+     * @param TestRequestDto[] $responses
+     */
+    private function getTagsFromRequest(array $responses): array
+    {
+        $output = [];
+        foreach ($responses as $response) {
+            foreach ($response->usedTags as $tag) {
+                if(in_array($tag->name, $output)) {
+                    continue;
+                }
+                $output[] = $tag->name;
+            }
+        }
         return $output;
     }
 

@@ -10,6 +10,7 @@ use Perry\Files\Storage;
 use Perry\Helpers\Tests\TestInfoResolver;
 use Perry\SwaggerGenerator\Cache\Dtos\TestRequestDto;
 use Perry\SwaggerGenerator\Cache\FindUsedSecurityScheme;
+use Perry\SwaggerGenerator\Cache\FindUsedTags;
 use Perry\SwaggerGenerator\Cache\GenerateSwaggerRootData;
 use Perry\SwaggerGenerator\Cache\SaveSwaggerSecuritySchemeIfExists;
 use Perry\SwaggerGenerator\Cache\SaveTagsIfExists;
@@ -30,6 +31,7 @@ class SwaggerGenerator
         (new GenerateSwaggerRootData())->execute();
         (new SaveSwaggerSecuritySchemeIfExists())->execute();
         (new SaveTagsIfExists())->execute();
+        $usedTags = (new FindUsedTags())->execute();
 
         $usedSecurityScheme = (new FindUsedSecurityScheme())->execute();
         $dto = new TestRequestDto(
@@ -41,7 +43,8 @@ class SwaggerGenerator
             query: $request->query->all(),
             body: $request->request->all(),
             response: $response->getContent(),
-            usedSecurityScheme: $usedSecurityScheme
+            usedSecurityScheme: $usedSecurityScheme,
+            usedTags: $usedTags,
         );
 
         Storage::saveTestRequest($dto);

@@ -3,11 +3,13 @@
 namespace Perry\SwaggerGenerator\Cache\Dtos;
 
 use Perry\Attributes\SecurityScheme\UseSecurityScheme;
+use Perry\Attributes\Tag\UsingTag;
 
 class TestRequestDto
 {
     /**
      * @param UseSecurityScheme[] $usedSecurityScheme
+     * @param UsingTag[] $usedSecurityScheme
      */
     public function __construct(
         public readonly string      $testName,
@@ -19,6 +21,7 @@ class TestRequestDto
         public readonly array       $body,
         public readonly string|null $response,
         public readonly array       $usedSecurityScheme = [],
+        public readonly array       $usedTags = [],
     ) {
     }
 }

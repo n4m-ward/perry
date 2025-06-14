@@ -20,7 +20,8 @@ class SaveRequestOnCache
         (new SaveSwaggerSecuritySchemeIfExists())->execute();
         (new SaveTagsIfExists())->execute();
         $usedSecurityScheme = (new FindUsedSecurityScheme())->execute();
-        $testRequestDto = TestRequestDtoGenerator::generate('post', $uri, $data, $headers, $response, $usedSecurityScheme);
+        $usedTags = (new FindUsedTags())->execute();
+        $testRequestDto = TestRequestDtoGenerator::generate('post', $uri, $data, $headers, $response, $usedSecurityScheme, $usedTags);
         Storage::saveTestRequest($testRequestDto);
     }
 }
