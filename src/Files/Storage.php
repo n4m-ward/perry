@@ -96,7 +96,7 @@ class Storage
         return unserialize($rootInfoSerialized);
     }
 
-    public static function getSwaggerDoc(): ?string
+    public static function getOpenApiDocumentation(): ?string
     {
         $docFile = StoragePathResolver::resolveDocumentationFolder() .'/output.yaml';
         if(!is_file($docFile)) {
@@ -206,7 +206,7 @@ class Storage
         }
     }
 
-    public static function deleteSwaggerFolder(): void
+    public static function deleteDocumentationFolder(): void
     {
         $swaggerFolder = StoragePathResolver::resolveDocumentationFolder();
         if(is_dir($swaggerFolder)) {

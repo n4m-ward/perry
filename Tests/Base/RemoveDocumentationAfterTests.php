@@ -10,13 +10,13 @@ trait RemoveDocumentationAfterTests
     {
         parent::setUp();
         Storage::deleteCacheFolder();
-        Storage::deleteSwaggerFolder();
+        Storage::deleteDocumentationFolder();
     }
 
     protected function tearDown(): void
     {
         parent::tearDown();
         Storage::deleteCacheFolder();
-        Storage::deleteSwaggerFolder();
+        Storage::deleteDocumentationFolder();
     }
 }

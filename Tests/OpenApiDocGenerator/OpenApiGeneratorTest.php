@@ -172,7 +172,7 @@ YAML);
         $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json()); // to generate the basic route info
         $this->swaggerGenerator->GenerateOpenApiDocumentationFromCacheFiles();
 
-        $documentation = Storage::getSwaggerDoc();
+        $documentation = Storage::getOpenApiDocumentation();
 
         $this->assertEquals($expectedDocumentation, $documentation);
     }
@@ -214,7 +214,7 @@ YAML);
         $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json());
         $this->swaggerGenerator->GenerateOpenApiDocumentationFromCacheFiles();
 
-        $documentation = Storage::getSwaggerDoc();
+        $documentation = Storage::getOpenApiDocumentation();
 
         $this->assertEquals($expectedDocumentation, $documentation);
     }
@@ -252,7 +252,7 @@ YAML);
         $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json());
         $this->swaggerGenerator->GenerateOpenApiDocumentationFromCacheFiles();
 
-        $documentation = Storage::getSwaggerDoc();
+        $documentation = Storage::getOpenApiDocumentation();
 
         $this->assertEquals($expectedDocumentation, $documentation);
     }
@@ -288,7 +288,7 @@ YAML);
         $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json());
         $this->swaggerGenerator->GenerateOpenApiDocumentationFromCacheFiles();
 
-        $documentation = Storage::getSwaggerDoc();
+        $documentation = Storage::getOpenApiDocumentation();
 
         $this->assertEquals($expectedDocumentation, $documentation);
     }

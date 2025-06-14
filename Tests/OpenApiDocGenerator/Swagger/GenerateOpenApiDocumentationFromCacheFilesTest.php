@@ -49,7 +49,7 @@ YAML);
         $this->perryHttp()->get('/test');
 
         $this->generateSwaggerFromCacheFiles->execute();
-        $doc = Storage::getSwaggerDoc();
+        $doc = Storage::getOpenApiDocumentation();
 
         $this->assertEquals($expectedDocumentation, $doc);
     }
