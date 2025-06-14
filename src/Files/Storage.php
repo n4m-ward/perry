@@ -5,7 +5,7 @@ namespace Perry\Files;
 use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Attributes\Tag\Tag;
 use Perry\Exceptions\PerryStorageException;
-use Perry\OpenApiCache\SwaggerRootInfo;
+use Perry\OpenApiCache\OpenApiRootInfo;
 use Perry\OpenApiDocGenerator\Cache\Dtos\TestRequestDto;
 use Symfony\Component\Yaml\Yaml;
 
@@ -13,7 +13,7 @@ class Storage
 {
     private const ROOT_INFO_DIR = 'root_info';
 
-    public static function saveTestRootInfo(SwaggerRootInfo $rootInfo): void
+    public static function saveTestRootInfo(OpenApiRootInfo $rootInfo): void
     {
         $cacheFolder = self::getCacheFolder();
         $rootInfoFolder = $cacheFolder . '/'. self::ROOT_INFO_DIR;
@@ -77,7 +77,7 @@ class Storage
     /**
      * @throws PerryStorageException
      */
-    public static function getRootInfo(): SwaggerRootInfo
+    public static function getRootInfo(): OpenApiRootInfo
     {
         $cacheFolder = self::getCacheFolder();
         $rootInfoFolder = $cacheFolder . '/'. self::ROOT_INFO_DIR . '/root_info.cache';

@@ -10,7 +10,7 @@ use Perry\Exceptions\PerryAttributeNotFoundException;
 use Perry\Helpers\Reflection\ReflectionAttributeFinder;
 use Perry\Helpers\Tests\TestInfoResolver;
 
-class FindUsedTags
+class FindTagsUsedByTestCase
 {
     /**
      * @return UsingTag[]

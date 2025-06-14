@@ -7,7 +7,7 @@ use Perry\Attributes\Servers;
 use Perry\Exceptions\PerryInfoAttributeNotFoundException;
 use Perry\Files\Storage;
 use Perry\Helpers\Tests\TestInfoResolver;
-use Perry\OpenApiCache\SwaggerRootInfo;
+use Perry\OpenApiCache\OpenApiRootInfo;
 
 class SaveOpenApiRootDataOnCache
 {
@@ -22,7 +22,7 @@ class SaveOpenApiRootDataOnCache
         $info = $classWithSwaggerRootInfo->getAttributes(Info::class)[0]->newInstance();
         $servers = $classWithSwaggerRootInfo->getAttributes(Servers::class)[0]?->newInstance() ?? null;
 
-        $rootInfoCache = new SwaggerRootInfo(
+        $rootInfoCache = new OpenApiRootInfo(
             info: $info,
             servers: $servers,
         );

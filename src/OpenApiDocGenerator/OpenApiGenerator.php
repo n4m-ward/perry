@@ -10,7 +10,7 @@ use Perry\Files\Storage;
 use Perry\Helpers\Tests\TestInfoResolver;
 use Perry\OpenApiDocGenerator\Cache\Dtos\TestRequestDto;
 use Perry\OpenApiDocGenerator\Cache\FindUsedSecurityScheme;
-use Perry\OpenApiDocGenerator\Cache\FindUsedTags;
+use Perry\OpenApiDocGenerator\Cache\FindTagsUsedByTestCase;
 use Perry\OpenApiDocGenerator\Cache\SaveOpenApiRootDataOnCache;
 use Perry\OpenApiDocGenerator\Cache\SaveOpenApiSecuritySchemeOnCacheIfExists;
 use Perry\OpenApiDocGenerator\Cache\SaveTagsOnCacheIfExists;
@@ -31,7 +31,7 @@ class OpenApiGenerator
         (new SaveOpenApiRootDataOnCache())->execute();
         (new SaveOpenApiSecuritySchemeOnCacheIfExists())->execute();
         (new SaveTagsOnCacheIfExists())->execute();
-        $usedTags = (new FindUsedTags())->execute();
+        $usedTags = (new FindTagsUsedByTestCase())->execute();
 
         $usedSecurityScheme = (new FindUsedSecurityScheme())->execute();
         $dto = new TestRequestDto(

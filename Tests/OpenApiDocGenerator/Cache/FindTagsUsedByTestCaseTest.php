@@ -5,20 +5,20 @@ namespace Tests\OpenApiDocGenerator\Cache;
 use Perry\Attributes\Tag\Tag;
 use Perry\Attributes\Tag\UsingTag;
 use Perry\Exceptions\PerryAttributeNotFoundException;
-use Perry\OpenApiDocGenerator\Cache\FindUsedTags;
+use Perry\OpenApiDocGenerator\Cache\FindTagsUsedByTestCase;
 use Tests\Base\BaseTestCase;
 
 #[Tag(name: 'Tag 1', description: 'Tag 1 description')]
 #[Tag('Tag 2', description: 'Tag 2 description')]
 #[Tag('Tag 3', description: 'Tag 3 description')]
-class FindUsedTagsTest extends BaseTestCase
+class FindTagsUsedByTestCaseTest extends BaseTestCase
 {
-    private FindUsedTags $findUsedTags;
+    private FindTagsUsedByTestCase $findUsedTags;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->findUsedTags = new FindUsedTags();
+        $this->findUsedTags = new FindTagsUsedByTestCase();
     }
 
     public function test_shouldNotFindUsedTags(): void

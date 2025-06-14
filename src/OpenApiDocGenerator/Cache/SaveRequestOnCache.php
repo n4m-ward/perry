@@ -20,7 +20,7 @@ class SaveRequestOnCache
         (new SaveOpenApiSecuritySchemeOnCacheIfExists())->execute();
         (new SaveTagsOnCacheIfExists())->execute();
         $usedSecurityScheme = (new FindUsedSecurityScheme())->execute();
-        $usedTags = (new FindUsedTags())->execute();
+        $usedTags = (new FindTagsUsedByTestCase())->execute();
         $testRequestDto = TestRequestDtoGenerator::generate('post', $uri, $data, $headers, $response, $usedSecurityScheme, $usedTags);
         Storage::saveTestRequest($testRequestDto);
     }
