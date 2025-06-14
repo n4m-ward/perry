@@ -15,16 +15,17 @@ class GenerateSwaggerFromCacheFiles
         try {
             $output = $this->generateRootInfo();
 
+            $tags = (new GenerateTagDocs())->execute();
+            if(!empty($tags)) {
+                $output['tags'] = $tags;
+            }
+
             $requestFolder = Storage::loadRequestFolder();
             $output['paths'] = $this->parseFoldersToRequestDto($requestFolder);
             $components = $this->getComponents();
 
             if (!empty($components)) {
                 $output['components'] = $components;
-            }
-            $tags = (new GenerateTagDocs())->execute();
-            if(!empty($tags)) {
-                $output['tags'] = $tags;
             }
 
             Storage::saveSwaggerDoc($output);

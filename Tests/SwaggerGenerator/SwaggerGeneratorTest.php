@@ -161,6 +161,12 @@ info:
 externalDocs:
   description: Find more info here
   url: https://example.com/external-docs
+tags:
+- name: Tag 1
+  description: Tag 1 description
+  externalDocs:
+    description: Find more info here
+    url: https://example.com/external-docs
 paths:
   /:
     get:
@@ -219,6 +225,12 @@ info:
 externalDocs:
   description: Find more info here
   url: https://example.com/external-docs
+tags:
+- name: Tag 1
+  description: Tag 1 description
+  externalDocs:
+    description: Find more info here
+    url: https://example.com/external-docs
 paths:
   /:
     get:
@@ -275,6 +287,12 @@ info:
 externalDocs:
   description: Find more info here
   url: https://example.com/external-docs
+tags:
+- name: Tag 1
+  description: Tag 1 description
+  externalDocs:
+    description: Find more info here
+    url: https://example.com/external-docs
 paths:
   /:
     get:
@@ -331,6 +349,12 @@ info:
 externalDocs:
   description: Find more info here
   url: https://example.com/external-docs
+tags:
+- name: Tag 1
+  description: Tag 1 description
+  externalDocs:
+    description: Find more info here
+    url: https://example.com/external-docs
 paths:
   /:
     get:
@@ -354,12 +378,6 @@ components:
       in: header
       name: Authorization
       scheme: bearer
-tags:
-- name: Tag 1
-  description: Tag 1 description
-  externalDocs:
-    description: Find more info here
-    url: https://example.com/external-docs
 ...
 
 YAML;
