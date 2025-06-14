@@ -8,6 +8,7 @@ use Perry\Attributes\ExternalDocs;
 use Perry\Attributes\Info;
 use Perry\Attributes\Server;
 use Perry\Attributes\Servers;
+use Perry\Attributes\Tag\Tag;
 use Perry\ProjectExecutionMode;
 use Perry\UnitTest\ProjectExecutionModeOverride;
 
@@ -21,6 +22,14 @@ use Perry\UnitTest\ProjectExecutionModeOverride;
     description: 'Example server description',
     contactEmail: 'test@example.com',
     termsOfService: 'https://example.com/terms-of-service',
+    externalDocs: new ExternalDocs(
+        url: 'https://example.com/external-docs',
+        description: 'Find more info here',
+    ),
+)]
+#[Tag(
+    name: 'Tag 1',
+    description: 'Tag 1 description',
     externalDocs: new ExternalDocs(
         url: 'https://example.com/external-docs',
         description: 'Find more info here',

@@ -3,6 +3,7 @@
 namespace Perry\Files;
 
 use Perry\Attributes\SecurityScheme\SecurityScheme;
+use Perry\Attributes\Tag\Tag;
 use Perry\Exceptions\PerryStorageException;
 use Perry\SwaggerCache\SwaggerRootInfo;
 use Perry\SwaggerGenerator\Cache\Dtos\TestRequestDto;
@@ -126,6 +127,17 @@ class Storage
         self::saveFile($rootInfoFolder . '/security_schemes.cache', serialize($securitySchemes));
     }
 
+    public static function saveTags(array $tags): void
+    {
+        $cacheFolder = self::getCacheFolder();
+        $rootInfoFolder = $cacheFolder . '/'. self::ROOT_INFO_DIR;
+        if(!is_dir($rootInfoFolder)) {
+            mkdir($rootInfoFolder);
+        }
+
+        self::saveFile($rootInfoFolder . '/tags.cache', serialize($tags));
+    }
+
     /**
      * @return SecurityScheme[]
      */
@@ -146,6 +158,29 @@ class Storage
         }
 
         return unserialize($securitySchemeSerialized);
+    }
+
+
+    /**
+     * @return Tag[]
+     */
+    public static function getTagsOrEmpty(): array
+    {
+        $cacheFolder = self::getCacheFolder();
+        $tagsFolder = $cacheFolder . '/'. self::ROOT_INFO_DIR . '/tags.cache';
+
+
+        if (!is_file($tagsFolder)) {
+            return [];
+        }
+
+        $tagsSerialized = file_get_contents($tagsFolder);
+
+        if(empty($tagsSerialized)) {
+            return [];
+        }
+
+        return unserialize($tagsSerialized);
     }
 
     private static function saveFile(string $file, string $content): void

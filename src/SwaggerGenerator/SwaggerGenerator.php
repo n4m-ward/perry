@@ -12,6 +12,7 @@ use Perry\SwaggerGenerator\Cache\Dtos\TestRequestDto;
 use Perry\SwaggerGenerator\Cache\FindUsedSecurityScheme;
 use Perry\SwaggerGenerator\Cache\GenerateSwaggerRootData;
 use Perry\SwaggerGenerator\Cache\SaveSwaggerSecuritySchemeIfExists;
+use Perry\SwaggerGenerator\Cache\SaveTagsIfExists;
 use Perry\SwaggerGenerator\Swagger\GenerateSwaggerFromCacheFiles;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,6 +29,7 @@ class SwaggerGenerator
 
         (new GenerateSwaggerRootData())->execute();
         (new SaveSwaggerSecuritySchemeIfExists())->execute();
+        (new SaveTagsIfExists())->execute();
 
         $usedSecurityScheme = (new FindUsedSecurityScheme())->execute();
         $dto = new TestRequestDto(

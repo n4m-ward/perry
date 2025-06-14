@@ -22,6 +22,10 @@ class GenerateSwaggerFromCacheFiles
             if (!empty($components)) {
                 $output['components'] = $components;
             }
+            $tags = (new GenerateTagDocs())->execute();
+            if(!empty($tags)) {
+                $output['tags'] = $tags;
+            }
 
             Storage::saveSwaggerDoc($output);
         } finally {
