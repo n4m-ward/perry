@@ -4,7 +4,7 @@ namespace Tests\Base;
 
 use Perry\Files\Storage;
 
-trait RemoveSwaggerAfterTests
+trait RemoveDocumentationAfterTests
 {
     protected function setUp(): void
     {

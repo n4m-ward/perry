@@ -6,11 +6,11 @@ use Perry\Attributes\Tag\Tag;
 use Perry\Files\Storage;
 use Perry\OpenApiDocGenerator\OpenApi\GenerateTagDocsFromCache;
 use Tests\Base\BaseTestCase;
-use Tests\Base\RemoveSwaggerAfterTests;
+use Tests\Base\RemoveDocumentationAfterTests;
 
 class GenerateTagDocsFromCacheTest extends BaseTestCase
 {
-    use RemoveSwaggerAfterTests;
+    use RemoveDocumentationAfterTests;
 
     private GenerateTagDocsFromCache $generateTagDocs;
 

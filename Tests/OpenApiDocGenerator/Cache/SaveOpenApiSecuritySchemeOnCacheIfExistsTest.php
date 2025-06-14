@@ -6,12 +6,12 @@ use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Files\Storage;
 use Perry\OpenApiDocGenerator\Cache\SaveOpenApiSecuritySchemeOnCacheIfExists;
 use Tests\Base\BaseTestCase;
-use Tests\Base\RemoveSwaggerAfterTests;
+use Tests\Base\RemoveDocumentationAfterTests;
 
 #[SecurityScheme(securityScheme: 'BearerToken', type: 'http', in: 'header', name: 'Authorization', scheme: 'bearer')]
 class SaveOpenApiSecuritySchemeOnCacheIfExistsTest extends BaseTestCase
 {
-    use RemoveSwaggerAfterTests;
+    use RemoveDocumentationAfterTests;
 
     public function test_shouldSaveSecurityScheme(): void
     {

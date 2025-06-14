@@ -7,13 +7,13 @@ use Perry\PerryHttp\PerryHttpRequest;
 use Perry\OpenApiDocGenerator\OpenApi\GenerateOpenApiDocumentationFromCacheFiles;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Base\BaseTestCase;
-use Tests\Base\RemoveSwaggerAfterTests;
+use Tests\Base\RemoveDocumentationAfterTests;
 use Tests\TestHelpers\OpenApiDocPayload;
 
 class GenerateOpenApiDocumentationFromCacheFilesTest extends BaseTestCase
 {
     use PerryHttpRequest;
-    use RemoveSwaggerAfterTests;
+    use RemoveDocumentationAfterTests;
 
     private GenerateOpenApiDocumentationFromCacheFiles $generateSwaggerFromCacheFiles;
 

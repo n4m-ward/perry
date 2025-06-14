@@ -7,12 +7,12 @@ use Perry\Attributes\SecurityScheme\UseSecurityScheme;
 use Perry\Exceptions\PerryAttributeNotFoundException;
 use Perry\OpenApiDocGenerator\Cache\FindUsedSecurityScheme;
 use Tests\Base\BaseTestCase;
-use Tests\Base\RemoveSwaggerAfterTests;
+use Tests\Base\RemoveDocumentationAfterTests;
 
 #[SecurityScheme(securityScheme: 'BearerToken', type: 'http', in: 'header', name: 'Authorization', scheme: 'bearer')]
 class FindUsedSecuritySchemeTest extends BaseTestCase
 {
-    use RemoveSwaggerAfterTests;
+    use RemoveDocumentationAfterTests;
 
     public function test_shouldFindNoUsedSecurityScheme(): void
     {

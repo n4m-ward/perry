@@ -7,14 +7,14 @@ use Perry\Attributes\Tag\UsingTag;
 use Perry\PerryHttp\PerryHttpRequest;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Base\BaseTestCase;
-use Tests\Base\RemoveSwaggerAfterTests;
+use Tests\Base\RemoveDocumentationAfterTests;
 use Tests\Dummy\DummyController;
 use Tests\Dummy\DummyControllerMock;
 
 class PerryHttpTest extends BaseTestCase
 {
     use PerryHttpRequest;
-    use RemoveSwaggerAfterTests;
+    use RemoveDocumentationAfterTests;
 
     #[UsingTag('Tag 1')]
     public function test_shouldPost_withHeadersAndBody(): void

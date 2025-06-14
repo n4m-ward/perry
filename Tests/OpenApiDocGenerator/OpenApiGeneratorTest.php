@@ -6,7 +6,7 @@ use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Attributes\SecurityScheme\UseSecurityScheme;
 use Perry\Attributes\Tag\UsingTag;
 use Perry\Exceptions\PerryAttributeNotFoundException;
-use Tests\Base\RemoveSwaggerAfterTests;
+use Tests\Base\RemoveDocumentationAfterTests;
 use Illuminate\Http\Request;
 use Perry\Exceptions\PerryException;
 use Perry\Exceptions\PerryInfoAttributeNotFoundException;
@@ -20,7 +20,7 @@ use Tests\TestHelpers\OpenApiDocPayload;
 #[SecurityScheme(securityScheme: 'BearerToken', type: 'http', in: 'header', name: 'Authorization', scheme: 'bearer')]
 class OpenApiGeneratorTest extends BaseTestCase
 {
-    use RemoveSwaggerAfterTests;
+    use RemoveDocumentationAfterTests;
 
     private OpenApiGenerator $swaggerGenerator;
 
