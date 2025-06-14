@@ -4,6 +4,7 @@ namespace Tests\SwaggerGenerator;
 
 use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Attributes\SecurityScheme\UseSecurityScheme;
+use Perry\Attributes\Tag\UsingTag;
 use Perry\Exceptions\PerryAttributeNotFoundException;
 use Tests\Base\RemoveSwaggerAfterTests;
 use Illuminate\Http\Request;
@@ -14,6 +15,7 @@ use Perry\Files\Storage;
 use Perry\SwaggerGenerator\SwaggerGenerator;
 use ReflectionException;
 use Tests\Base\BaseTestCase;
+use Tests\TestHelpers\OpenApiDocPayload;
 
 #[SecurityScheme(securityScheme: 'BearerToken', type: 'http', in: 'header', name: 'Authorization', scheme: 'bearer')]
 class SwaggerGeneratorTest extends BaseTestCase
@@ -142,24 +144,7 @@ class SwaggerGeneratorTest extends BaseTestCase
      */
     public function test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfo(): void
     {
-        $expectedDocumentation = <<<YAML
----
-openapi: 3.0.0
-servers:
-- description: Server 1
-  url: https://server1.com
-- description: Server 2
-  url: https://server2.com
-info:
-  version: 1.0.0
-  title: Example server title
-  description: Example server description
-  contact:
-    email: test@example.com
-  termsOfService: https://example.com/terms-of-service
-externalDocs:
-  description: Find more info here
-  url: https://example.com/external-docs
+        $expectedDocumentation = OpenApiDocPayload::withDefaultBody(<<<YAML
 paths:
   /:
     get:
@@ -174,16 +159,8 @@ paths:
           content:
             application/json:
               schema: []
-components:
-  securitySchemes:
-    BearerToken:
-      type: http
-      in: header
-      name: Authorization
-      scheme: bearer
-...
+YAML);
 
-YAML;
 
         $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json()); // to generate the basic route info
         $this->swaggerGenerator->generateSwaggerFromCacheFiles();
@@ -200,24 +177,7 @@ YAML;
      */
     public function test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndSecurityScheme(): void
     {
-        $expectedDocumentation = <<<YAML
----
-openapi: 3.0.0
-servers:
-- description: Server 1
-  url: https://server1.com
-- description: Server 2
-  url: https://server2.com
-info:
-  version: 1.0.0
-  title: Example server title
-  description: Example server description
-  contact:
-    email: test@example.com
-  termsOfService: https://example.com/terms-of-service
-externalDocs:
-  description: Find more info here
-  url: https://example.com/external-docs
+        $expectedDocumentation = OpenApiDocPayload::withDefaultBody(<<<YAML
 paths:
   /:
     get:
@@ -232,16 +192,8 @@ paths:
           content:
             application/json:
               schema: []
-components:
-  securitySchemes:
-    BearerToken:
-      type: http
-      in: header
-      name: Authorization
-      scheme: bearer
-...
+YAML);
 
-YAML;
 
         Storage::saveSecuritySchemes([new SecurityScheme(securityScheme: 'BearerToken', type: 'http', in: 'header', name: 'Authorization', scheme: 'bearer')]);
 
@@ -256,24 +208,7 @@ YAML;
     #[UseSecurityScheme('BearerToken')]
     public function test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndUsedSecurityScheme(): void
     {
-        $expectedDocumentation = <<<YAML
----
-openapi: 3.0.0
-servers:
-- description: Server 1
-  url: https://server1.com
-- description: Server 2
-  url: https://server2.com
-info:
-  version: 1.0.0
-  title: Example server title
-  description: Example server description
-  contact:
-    email: test@example.com
-  termsOfService: https://example.com/terms-of-service
-externalDocs:
-  description: Find more info here
-  url: https://example.com/external-docs
+        $expectedDocumentation = OpenApiDocPayload::withDefaultBody(<<<YAML
 paths:
   /:
     get:
@@ -290,17 +225,38 @@ paths:
               schema: []
       security:
       - BearerToken: []
-components:
-  securitySchemes:
-    BearerToken:
-      type: http
-      in: header
-      name: Authorization
-      scheme: bearer
-...
+YAML);
 
-YAML;
 
+        $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json());
+        $this->swaggerGenerator->generateSwaggerFromCacheFiles();
+
+        $documentation = Storage::getSwaggerDoc();
+
+        $this->assertEquals($expectedDocumentation, $documentation);
+    }
+
+    #[UsingTag('Tag 1')]
+    public function test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndTags(): void
+    {
+        $expectedDocumentation = OpenApiDocPayload::withDefaultBody(<<<YAML
+paths:
+  /:
+    get:
+      summary: generate swagger from cache files should generate a yaml with root
+        info and tags
+      description: generate swagger from cache files should generate a yaml with root
+        info and tags
+      operationId: test_generateSwaggerFromCacheFiles_shouldGenerateAYamlWithRootInfoAndTags
+      responses:
+        200:
+          description: "200"
+          content:
+            application/json:
+              schema: []
+      tags:
+      - Tag 1
+YAML);
         $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json());
         $this->swaggerGenerator->generateSwaggerFromCacheFiles();
 

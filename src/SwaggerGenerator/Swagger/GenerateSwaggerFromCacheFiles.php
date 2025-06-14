@@ -15,6 +15,11 @@ class GenerateSwaggerFromCacheFiles
         try {
             $output = $this->generateRootInfo();
 
+            $tags = (new GenerateTagDocs())->execute();
+            if(!empty($tags)) {
+                $output['tags'] = $tags;
+            }
+
             $requestFolder = Storage::loadRequestFolder();
             $output['paths'] = $this->parseFoldersToRequestDto($requestFolder);
             $components = $this->getComponents();

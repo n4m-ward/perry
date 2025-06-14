@@ -15,6 +15,7 @@ class TestRequestDtoGenerator
         array $headers,
         TestResponse $response,
         array $usedSecurityScheme = [],
+        array $usedTags = [],
     ): TestRequestDto {
         return new TestRequestDto(
             testName: TestInfoResolver::resolve()->method,
