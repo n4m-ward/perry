@@ -5,8 +5,8 @@ namespace Perry\Files;
 use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Attributes\Tag\Tag;
 use Perry\Exceptions\PerryStorageException;
-use Perry\SwaggerCache\SwaggerRootInfo;
-use Perry\SwaggerGenerator\Cache\Dtos\TestRequestDto;
+use Perry\OpenApiCache\SwaggerRootInfo;
+use Perry\OpenApiDocGenerator\Cache\Dtos\TestRequestDto;
 use Symfony\Component\Yaml\Yaml;
 
 class Storage

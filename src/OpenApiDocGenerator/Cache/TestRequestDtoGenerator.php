@@ -1,10 +1,10 @@
 <?php
 
-namespace Perry\SwaggerGenerator\Cache;
+namespace Perry\OpenApiDocGenerator\Cache;
 
 use Illuminate\Testing\TestResponse;
 use Perry\Helpers\Tests\TestInfoResolver;
-use Perry\SwaggerGenerator\Cache\Dtos\TestRequestDto;
+use Perry\OpenApiDocGenerator\Cache\Dtos\TestRequestDto;
 
 class TestRequestDtoGenerator
 {

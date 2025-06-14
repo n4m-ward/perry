@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\SwaggerGenerator\Cache;
+namespace Tests\OpenApiDocGenerator\Cache;
 
 use Perry\Attributes\Tag\Tag;
 use Perry\Attributes\Tag\UsingTag;
 use Perry\Exceptions\PerryAttributeNotFoundException;
-use Perry\SwaggerGenerator\Cache\FindUsedTags;
+use Perry\OpenApiDocGenerator\Cache\FindUsedTags;
 use Tests\Base\BaseTestCase;
 
 #[Tag(name: 'Tag 1', description: 'Tag 1 description')]

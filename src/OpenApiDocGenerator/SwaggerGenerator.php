@@ -1,6 +1,6 @@
 <?php
 
-namespace Perry\SwaggerGenerator;
+namespace Perry\OpenApiDocGenerator;
 
 use Illuminate\Http\Request;
 use Perry\Exceptions\PerryException;
@@ -8,13 +8,13 @@ use Perry\Exceptions\PerryInfoAttributeNotFoundException;
 use Perry\Exceptions\PerryStorageException;
 use Perry\Files\Storage;
 use Perry\Helpers\Tests\TestInfoResolver;
-use Perry\SwaggerGenerator\Cache\Dtos\TestRequestDto;
-use Perry\SwaggerGenerator\Cache\FindUsedSecurityScheme;
-use Perry\SwaggerGenerator\Cache\FindUsedTags;
-use Perry\SwaggerGenerator\Cache\GenerateSwaggerRootData;
-use Perry\SwaggerGenerator\Cache\SaveSwaggerSecuritySchemeIfExists;
-use Perry\SwaggerGenerator\Cache\SaveTagsIfExists;
-use Perry\SwaggerGenerator\Swagger\GenerateSwaggerFromCacheFiles;
+use Perry\OpenApiDocGenerator\Cache\Dtos\TestRequestDto;
+use Perry\OpenApiDocGenerator\Cache\FindUsedSecurityScheme;
+use Perry\OpenApiDocGenerator\Cache\FindUsedTags;
+use Perry\OpenApiDocGenerator\Cache\GenerateSwaggerRootData;
+use Perry\OpenApiDocGenerator\Cache\SaveSwaggerSecuritySchemeIfExists;
+use Perry\OpenApiDocGenerator\Cache\SaveTagsIfExists;
+use Perry\OpenApiDocGenerator\OpenApi\GenerateSwaggerFromCacheFiles;
 use Symfony\Component\HttpFoundation\Response;
 
 class SwaggerGenerator

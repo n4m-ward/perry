@@ -1,32 +1,33 @@
 <?php
 
-namespace Perry\SwaggerGenerator\Cache;
+namespace Perry\OpenApiDocGenerator\Cache;
 
 use Perry\Attributes\SecurityScheme\SecurityScheme;
+use Perry\Attributes\Tag\Tag;
 use Perry\Files\Storage;
 use Perry\Helpers\Tests\TestInfoResolver;
 
-class SaveSwaggerSecuritySchemeIfExists
+class SaveTagsIfExists
 {
     public function execute(): void
     {
         $testInfo = TestInfoResolver::resolve();
-        $securitySchemes = $this->findAllSecuritySchemesFromTestCase($testInfo->getReflectionClass());
+        $securitySchemes = $this->findAllTagsFromTestCase($testInfo->getReflectionClass());
         if (empty($securitySchemes)) {
             return;
         }
 
-        Storage::saveSecuritySchemes($securitySchemes);
+        Storage::saveTags($securitySchemes);
     }
 
-    private function findAllSecuritySchemesFromTestCase(\ReflectionClass $testCase): array
+    private function findAllTagsFromTestCase(\ReflectionClass $testCase): array
     {
-        $securitySchemes = $this->mapSecuritySchemeToInstance($testCase->getAttributes(SecurityScheme::class));
+        $securitySchemes = $this->mapTagToInstance($testCase->getAttributes(Tag::class));
 
         if ($testCase->getParentClass()) {
             $securitySchemes = array_merge(
                 $securitySchemes,
-                $this->findAllSecuritySchemesFromTestCase($testCase->getParentClass())
+                $this->findAllTagsFromTestCase($testCase->getParentClass())
             );
         }
 
@@ -35,9 +36,9 @@ class SaveSwaggerSecuritySchemeIfExists
 
     /**
      * @param \ReflectionAttribute[] $securitySchemes
-     * @return SecurityScheme[]
+     * @return Tag[]
      */
-    private function mapSecuritySchemeToInstance(array $securitySchemes): array
+    private function mapTagToInstance(array $securitySchemes): array
     {
         return array_map(fn (\ReflectionAttribute $securityScheme) => $securityScheme->newInstance(), $securitySchemes);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Perry\SwaggerGenerator\Cache;
+namespace Perry\OpenApiDocGenerator\Cache;
 
 use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Attributes\SecurityScheme\UseSecurityScheme;

@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\SwaggerGenerator\Cache;
+namespace Tests\OpenApiDocGenerator\Cache;
 
 use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Attributes\SecurityScheme\UseSecurityScheme;
 use Perry\Exceptions\PerryAttributeNotFoundException;
-use Perry\SwaggerGenerator\Cache\FindUsedSecurityScheme;
+use Perry\OpenApiDocGenerator\Cache\FindUsedSecurityScheme;
 use Tests\Base\BaseTestCase;
 use Tests\Base\RemoveSwaggerAfterTests;
 

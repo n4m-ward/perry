@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\SwaggerGenerator;
+namespace Tests\OpenApiDocGenerator;
 
 use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Attributes\SecurityScheme\UseSecurityScheme;
@@ -12,7 +12,7 @@ use Perry\Exceptions\PerryException;
 use Perry\Exceptions\PerryInfoAttributeNotFoundException;
 use Perry\Exceptions\PerryStorageException;
 use Perry\Files\Storage;
-use Perry\SwaggerGenerator\SwaggerGenerator;
+use Perry\OpenApiDocGenerator\SwaggerGenerator;
 use ReflectionException;
 use Tests\Base\BaseTestCase;
 use Tests\TestHelpers\OpenApiDocPayload;

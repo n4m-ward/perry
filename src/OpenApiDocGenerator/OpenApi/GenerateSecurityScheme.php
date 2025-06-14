@@ -1,6 +1,6 @@
 <?php
 
-namespace Perry\SwaggerGenerator\Swagger;
+namespace Perry\OpenApiDocGenerator\OpenApi;
 
 use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Files\Storage;

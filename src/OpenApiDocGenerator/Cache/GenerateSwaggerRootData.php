@@ -1,13 +1,13 @@
 <?php
 
-namespace Perry\SwaggerGenerator\Cache;
+namespace Perry\OpenApiDocGenerator\Cache;
 
 use Perry\Attributes\Info;
 use Perry\Attributes\Servers;
 use Perry\Exceptions\PerryInfoAttributeNotFoundException;
 use Perry\Files\Storage;
 use Perry\Helpers\Tests\TestInfoResolver;
-use Perry\SwaggerCache\SwaggerRootInfo;
+use Perry\OpenApiCache\SwaggerRootInfo;
 
 class GenerateSwaggerRootData
 {

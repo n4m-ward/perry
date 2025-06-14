@@ -1,11 +1,11 @@
 <?php
 
-namespace Perry\SwaggerGenerator\Swagger;
+namespace Perry\OpenApiDocGenerator\OpenApi;
 
 use Perry\Attributes\SecurityScheme\UseSecurityScheme;
 use Perry\Files\Storage;
-use Perry\SwaggerGenerator\Cache\Dtos\TestRequestDto;
-use Perry\SwaggerGenerator\Helper\SwaggerObjectHelper;
+use Perry\OpenApiDocGenerator\Cache\Dtos\TestRequestDto;
+use Perry\OpenApiDocGenerator\Helper\SwaggerObjectHelper;
 
 class ParseEndpointToSwaggerDocumentation
 {

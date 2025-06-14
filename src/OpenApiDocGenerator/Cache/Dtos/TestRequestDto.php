@@ -1,6 +1,6 @@
 <?php
 
-namespace Perry\SwaggerGenerator\Cache\Dtos;
+namespace Perry\OpenApiDocGenerator\Cache\Dtos;
 
 use Perry\Attributes\SecurityScheme\UseSecurityScheme;
 use Perry\Attributes\Tag\UsingTag;

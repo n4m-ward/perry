@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\SwaggerGenerator\Swagger;
+namespace Tests\OpenApiDocGenerator\Swagger;
 
 use Perry\Attributes\Tag\Tag;
 use Perry\Files\Storage;
-use Perry\SwaggerGenerator\Swagger\GenerateTagDocs;
+use Perry\OpenApiDocGenerator\OpenApi\GenerateTagDocs;
 use Tests\Base\BaseTestCase;
 use Tests\Base\RemoveSwaggerAfterTests;
 

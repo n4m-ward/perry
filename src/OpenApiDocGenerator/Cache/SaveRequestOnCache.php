@@ -1,6 +1,6 @@
 <?php
 
-namespace Perry\SwaggerGenerator\Cache;
+namespace Perry\OpenApiDocGenerator\Cache;
 
 use Illuminate\Testing\TestResponse;
 use Perry\Exceptions\PerryAttributeNotFoundException;

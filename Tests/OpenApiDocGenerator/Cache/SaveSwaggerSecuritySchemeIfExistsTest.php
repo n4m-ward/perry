@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\SwaggerGenerator\Cache;
+namespace Tests\OpenApiDocGenerator\Cache;
 
 use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Files\Storage;
-use Perry\SwaggerGenerator\Cache\SaveSwaggerSecuritySchemeIfExists;
+use Perry\OpenApiDocGenerator\Cache\SaveSwaggerSecuritySchemeIfExists;
 use Tests\Base\BaseTestCase;
 use Tests\Base\RemoveSwaggerAfterTests;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\SwaggerGenerator\Swagger;
+namespace Tests\OpenApiDocGenerator\Swagger;
 
 use Perry\PerryHttp\PerryHttpRequest;
-use Perry\SwaggerGenerator\Swagger\ParseEndpointToSwaggerDocumentation;
+use Perry\OpenApiDocGenerator\OpenApi\ParseEndpointToSwaggerDocumentation;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Base\BaseTestCase;
 use Tests\Base\RemoveSwaggerAfterTests;

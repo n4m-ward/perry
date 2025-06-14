@@ -1,6 +1,6 @@
 <?php
 
-namespace Perry\SwaggerGenerator\Swagger;
+namespace Perry\OpenApiDocGenerator\OpenApi;
 
 use Perry\Exceptions\PerryStorageException;
 use Perry\Files\Storage;

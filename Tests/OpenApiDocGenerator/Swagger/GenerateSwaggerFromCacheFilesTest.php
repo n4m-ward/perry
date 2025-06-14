@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\SwaggerGenerator\Swagger;
+namespace Tests\OpenApiDocGenerator\Swagger;
 
 use Perry\Files\Storage;
 use Perry\PerryHttp\PerryHttpRequest;
-use Perry\SwaggerGenerator\Swagger\GenerateSwaggerFromCacheFiles;
+use Perry\OpenApiDocGenerator\OpenApi\GenerateSwaggerFromCacheFiles;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\Base\BaseTestCase;
 use Tests\Base\RemoveSwaggerAfterTests;

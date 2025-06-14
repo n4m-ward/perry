@@ -1,6 +1,6 @@
 <?php
 
-namespace Perry\SwaggerGenerator\Helper;
+namespace Perry\OpenApiDocGenerator\Helper;
 
 class SwaggerObjectHelper
 {

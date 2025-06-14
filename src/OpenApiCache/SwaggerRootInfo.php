@@ -1,6 +1,6 @@
 <?php
 
-namespace Perry\SwaggerCache;
+namespace Perry\OpenApiCache;
 
 use Perry\Attributes\Info;
 use Perry\Attributes\Servers;
