@@ -6,13 +6,7 @@ use Illuminate\Foundation\Testing\Concerns\MakesHttpRequests;
 use Illuminate\Testing\TestResponse;
 use Perry\Exceptions\PerryAttributeNotFoundException;
 use Perry\Exceptions\PerryInfoAttributeNotFoundException;
-use Perry\Files\Storage;
-use Perry\SwaggerGenerator\Cache\FindUsedSecurityScheme;
-use Perry\SwaggerGenerator\Cache\GenerateSwaggerRootData;
-use Perry\SwaggerGenerator\Cache\SaveRequestOnCache;
-use Perry\SwaggerGenerator\Cache\SaveSwaggerSecuritySchemeIfExists;
-use Perry\SwaggerGenerator\Cache\SaveTagsIfExists;
-use Perry\SwaggerGenerator\Cache\TestRequestDtoGenerator;
+use Perry\OpenApiDocGenerator\Cache\SaveRequestOnCache;
 use PHPUnit\Framework\TestCase;
 
 readonly class PerryHttpRequestExecutor

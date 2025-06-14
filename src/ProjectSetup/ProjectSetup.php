@@ -42,7 +42,7 @@ class ProjectSetup
 {
     "testsFolderPath": "/tests/Perry",
     "testExecutorPath": "/vendor/bin/phpunit",
-    "swaggerOutputPath": "/perry_output/swagger",
+    "swaggerOutputPath": "/perry_output/documentation",
     "cacheOutputPath": "/perry_output/cache"
 }
 JSON;

@@ -17,7 +17,7 @@ foreach ($autoloadPaths as $autoload) {
 }
 
 use Perry\ProjectSetup\ProjectSetup;
-use Perry\SwaggerGenerator\SwaggerGenerator;
+use Perry\OpenApiDocGenerator\OpenApiGenerator;
 use Perry\UnitTest\UnitTestExecutor;
 
 $projectSetup = new ProjectSetup();
@@ -35,6 +35,6 @@ if ($exitCode !== UnitTestExecutor::EXIT_CODE_OK) {
 
 echo "✅ Generating swagger documentation\n\n";
 
-$swaggerGenerator = new SwaggerGenerator();
+$swaggerGenerator = new OpenApiGenerator();
 
-$swaggerGenerator->generateSwaggerFromCacheFiles();
+$swaggerGenerator->GenerateOpenApiDocumentationFromCacheFiles();

@@ -5,15 +5,15 @@ namespace Perry\Files;
 use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Attributes\Tag\Tag;
 use Perry\Exceptions\PerryStorageException;
-use Perry\SwaggerCache\SwaggerRootInfo;
-use Perry\SwaggerGenerator\Cache\Dtos\TestRequestDto;
+use Perry\OpenApiCache\OpenApiRootInfo;
+use Perry\OpenApiDocGenerator\Cache\Dtos\TestRequestDto;
 use Symfony\Component\Yaml\Yaml;
 
 class Storage
 {
     private const ROOT_INFO_DIR = 'root_info';
 
-    public static function saveTestRootInfo(SwaggerRootInfo $rootInfo): void
+    public static function saveTestRootInfo(OpenApiRootInfo $rootInfo): void
     {
         $cacheFolder = self::getCacheFolder();
         $rootInfoFolder = $cacheFolder . '/'. self::ROOT_INFO_DIR;
@@ -77,7 +77,7 @@ class Storage
     /**
      * @throws PerryStorageException
      */
-    public static function getRootInfo(): SwaggerRootInfo
+    public static function getRootInfo(): OpenApiRootInfo
     {
         $cacheFolder = self::getCacheFolder();
         $rootInfoFolder = $cacheFolder . '/'. self::ROOT_INFO_DIR . '/root_info.cache';
@@ -96,7 +96,7 @@ class Storage
         return unserialize($rootInfoSerialized);
     }
 
-    public static function getSwaggerDoc(): ?string
+    public static function getOpenApiDocumentation(): ?string
     {
         $docFile = StoragePathResolver::resolveDocumentationFolder() .'/output.yaml';
         if(!is_file($docFile)) {
@@ -206,7 +206,7 @@ class Storage
         }
     }
 
-    public static function deleteSwaggerFolder(): void
+    public static function deleteDocumentationFolder(): void
     {
         $swaggerFolder = StoragePathResolver::resolveDocumentationFolder();
         if(is_dir($swaggerFolder)) {
