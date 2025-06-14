@@ -16,9 +16,9 @@ class SaveRequestOnCache
      */
     public function execute($uri, array $data, array $headers, TestResponse $response): void
     {
-        (new GenerateSwaggerRootData())->execute();
-        (new SaveSwaggerSecuritySchemeIfExists())->execute();
-        (new SaveTagsIfExists())->execute();
+        (new SaveOpenApiRootDataOnCache())->execute();
+        (new SaveOpenApiSecuritySchemeOnCacheIfExists())->execute();
+        (new SaveTagsOnCacheIfExists())->execute();
         $usedSecurityScheme = (new FindUsedSecurityScheme())->execute();
         $usedTags = (new FindUsedTags())->execute();
         $testRequestDto = TestRequestDtoGenerator::generate('post', $uri, $data, $headers, $response, $usedSecurityScheme, $usedTags);

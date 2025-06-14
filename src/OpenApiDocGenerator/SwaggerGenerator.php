@@ -11,9 +11,9 @@ use Perry\Helpers\Tests\TestInfoResolver;
 use Perry\OpenApiDocGenerator\Cache\Dtos\TestRequestDto;
 use Perry\OpenApiDocGenerator\Cache\FindUsedSecurityScheme;
 use Perry\OpenApiDocGenerator\Cache\FindUsedTags;
-use Perry\OpenApiDocGenerator\Cache\GenerateSwaggerRootData;
-use Perry\OpenApiDocGenerator\Cache\SaveSwaggerSecuritySchemeIfExists;
-use Perry\OpenApiDocGenerator\Cache\SaveTagsIfExists;
+use Perry\OpenApiDocGenerator\Cache\SaveOpenApiRootDataOnCache;
+use Perry\OpenApiDocGenerator\Cache\SaveOpenApiSecuritySchemeOnCacheIfExists;
+use Perry\OpenApiDocGenerator\Cache\SaveTagsOnCacheIfExists;
 use Perry\OpenApiDocGenerator\OpenApi\GenerateSwaggerFromCacheFiles;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -28,9 +28,9 @@ class SwaggerGenerator
     {
         $request = $this->findRequestOnParameters($parameters);
 
-        (new GenerateSwaggerRootData())->execute();
-        (new SaveSwaggerSecuritySchemeIfExists())->execute();
-        (new SaveTagsIfExists())->execute();
+        (new SaveOpenApiRootDataOnCache())->execute();
+        (new SaveOpenApiSecuritySchemeOnCacheIfExists())->execute();
+        (new SaveTagsOnCacheIfExists())->execute();
         $usedTags = (new FindUsedTags())->execute();
 
         $usedSecurityScheme = (new FindUsedSecurityScheme())->execute();

@@ -6,7 +6,7 @@ use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Files\Storage;
 use Perry\Helpers\Tests\TestInfoResolver;
 
-class SaveSwaggerSecuritySchemeIfExists
+class SaveOpenApiSecuritySchemeOnCacheIfExists
 {
     public function execute(): void
     {

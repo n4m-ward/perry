@@ -9,7 +9,7 @@ use Perry\Files\Storage;
 use Perry\Helpers\Tests\TestInfoResolver;
 use Perry\OpenApiCache\SwaggerRootInfo;
 
-class GenerateSwaggerRootData
+class SaveOpenApiRootDataOnCache
 {
     /**
      * @throws \ReflectionException

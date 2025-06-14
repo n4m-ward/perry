@@ -7,7 +7,7 @@ use Perry\Attributes\Tag\Tag;
 use Perry\Files\Storage;
 use Perry\Helpers\Tests\TestInfoResolver;
 
-class SaveTagsIfExists
+class SaveTagsOnCacheIfExists
 {
     public function execute(): void
     {

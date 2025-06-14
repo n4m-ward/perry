@@ -4,18 +4,18 @@ namespace Tests\OpenApiDocGenerator\Cache;
 
 use Perry\Attributes\SecurityScheme\SecurityScheme;
 use Perry\Files\Storage;
-use Perry\OpenApiDocGenerator\Cache\SaveSwaggerSecuritySchemeIfExists;
+use Perry\OpenApiDocGenerator\Cache\SaveOpenApiSecuritySchemeOnCacheIfExists;
 use Tests\Base\BaseTestCase;
 use Tests\Base\RemoveSwaggerAfterTests;
 
 #[SecurityScheme(securityScheme: 'BearerToken', type: 'http', in: 'header', name: 'Authorization', scheme: 'bearer')]
-class SaveSwaggerSecuritySchemeIfExistsTest extends BaseTestCase
+class SaveOpenApiSecuritySchemeOnCacheIfExistsTest extends BaseTestCase
 {
     use RemoveSwaggerAfterTests;
 
     public function test_shouldSaveSecurityScheme(): void
     {
-        (new SaveSwaggerSecuritySchemeIfExists())->execute();
+        (new SaveOpenApiSecuritySchemeOnCacheIfExists())->execute();
         $securitySchemes = Storage::getSecuritySchemesOrEmpty();
 
         $this->assertCount(1, $securitySchemes);
@@ -29,7 +29,7 @@ class SaveSwaggerSecuritySchemeIfExistsTest extends BaseTestCase
     public function test_shouldNotDuplicateSecurityScheme(): void
     {
         Storage::saveSecuritySchemes([new SecurityScheme(securityScheme: 'BearerToken', type: 'http', in: 'header', name: 'Authorization', scheme: 'bearer')]);
-        (new SaveSwaggerSecuritySchemeIfExists())->execute();
+        (new SaveOpenApiSecuritySchemeOnCacheIfExists())->execute();
         $securitySchemes = Storage::getSecuritySchemesOrEmpty();
 
         $this->assertCount(1, $securitySchemes);
