@@ -159,6 +159,13 @@ paths:
           content:
             application/json:
               schema: []
+components:
+  securitySchemes:
+    BearerToken:
+      type: http
+      in: header
+      name: Authorization
+      scheme: bearer
 YAML);
 
 
@@ -192,6 +199,13 @@ paths:
           content:
             application/json:
               schema: []
+components:
+  securitySchemes:
+    BearerToken:
+      type: http
+      in: header
+      name: Authorization
+      scheme: bearer
 YAML);
 
 
@@ -225,6 +239,13 @@ paths:
               schema: []
       security:
       - BearerToken: []
+components:
+  securitySchemes:
+    BearerToken:
+      type: http
+      in: header
+      name: Authorization
+      scheme: bearer
 YAML);
 
 
@@ -256,6 +277,13 @@ paths:
               schema: []
       tags:
       - Tag 1
+components:
+  securitySchemes:
+    BearerToken:
+      type: http
+      in: header
+      name: Authorization
+      scheme: bearer
 YAML);
         $this->swaggerGenerator->generateDocAndSaveOnCache([new Request()], response()->json());
         $this->swaggerGenerator->generateSwaggerFromCacheFiles();
