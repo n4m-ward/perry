@@ -19,7 +19,7 @@ use Tests\Base\BaseTestCase;
 #[SecurityScheme(securityScheme: 'BearerToken', type: 'http', in: 'header', name: 'Authorization', scheme: 'bearer')]
 class SwaggerGeneratorTest extends BaseTestCase
 {
-//    use RemoveSwaggerAfterTests;
+    use RemoveSwaggerAfterTests;
 
     private SwaggerGenerator $swaggerGenerator;
 
