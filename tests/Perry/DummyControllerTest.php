@@ -130,7 +130,7 @@ class DummyControllerTest extends BaseTestCase
 
     public function test_shouldUpdateUser(): void
     {
-        Route::put('/user/123', [DummyController::class, 'dummyRequest']);
+        Route::put('/user/{user_id}', [DummyController::class, 'dummyRequest']);
 
         DummyControllerMock::mockHttpResponse(['success' => true], Response::HTTP_OK);
 

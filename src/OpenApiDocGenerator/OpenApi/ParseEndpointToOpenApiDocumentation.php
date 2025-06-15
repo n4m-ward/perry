@@ -5,6 +5,7 @@ namespace Perry\OpenApiDocGenerator\OpenApi;
 use Perry\Attributes\SecurityScheme\UseSecurityScheme;
 use Perry\Files\Storage;
 use Perry\OpenApiDocGenerator\Cache\Dtos\TestRequestDto;
+use Perry\OpenApiDocGenerator\Helper\OpenApiParameterFormatter;
 use Perry\OpenApiDocGenerator\Helper\SwaggerObjectHelper;
 
 class ParseEndpointToOpenApiDocumentation
@@ -23,16 +24,32 @@ class ParseEndpointToOpenApiDocumentation
     private function formatRequestMethod(string $endpoint, string $method): array
     {
         $requestList = $this->getRequestList($endpoint, $method);
-        $requestWithLessStatusCode = $this->findRequestWithLessStatusCode($requestList);
-        $requestDescription = $this->formatTestNameToRequestDescription($requestWithLessStatusCode->testName);
+        $requestWithLowestStatusCode = $this->findRequestWithLowestStatusCode($requestList);
+        $requestDescription = $this->formatTestNameToRequestDescription($requestWithLowestStatusCode->testName);
         $output = [
             'summary' => $requestDescription,
             'description' => $requestDescription,
-            'operationId' => $requestWithLessStatusCode->testName,
-            'responses' => $this->formatSwaggerResponses($requestList),
+            'operationId' => $requestWithLowestStatusCode->testName,
         ];
-        if($requestWithLessStatusCode->usedSecurityScheme) {
-            $output['security'] = $this->formatSecurity($requestWithLessStatusCode->usedSecurityScheme);
+
+        if(!empty($requestWithLowestStatusCode->routeParameters)) {
+            $output['parameters'] = OpenApiParameterFormatter::format($requestWithLowestStatusCode->routeParameters, in: 'path');
+        }
+
+        if(!empty($requestWithLowestStatusCode->query)) {
+            $parametersFromQuery = OpenApiParameterFormatter::format($requestWithLowestStatusCode->query, in: 'query', required: false);
+            $output['parameters'] = array_merge($output['parameters'] ?? [], $parametersFromQuery);
+        }
+
+        if(!empty($requestWithLowestStatusCode->headers)) {
+            $parametersFromHeader =  OpenApiParameterFormatter::format($requestWithLowestStatusCode->headers, in: 'header');
+            $output['parameters'] = array_merge($output['parameters'] ?? [], $parametersFromHeader);
+        }
+
+        $output['responses'] = $this->formatSwaggerResponses($requestList);
+
+        if($requestWithLowestStatusCode->usedSecurityScheme) {
+            $output['security'] = $this->formatSecurity($requestWithLowestStatusCode->usedSecurityScheme);
         }
 
         $tags = $this->getTagsFromRequest($requestList);
@@ -40,14 +57,14 @@ class ParseEndpointToOpenApiDocumentation
             $output['tags'] = $tags;
         }
 
-        if(!empty($requestWithLessStatusCode->body)) {
+        if(!empty($requestWithLowestStatusCode->body)) {
             $output['requestBody'] = [
                 'description' => $requestDescription,
                 'content' => [
                     'application/json' => [
                         'schema' => [
                             'type' => 'object',
-                            'properties' => SwaggerObjectHelper::formatToSwagger($requestWithLessStatusCode->body)
+                            'properties' => SwaggerObjectHelper::formatToSwagger($requestWithLowestStatusCode->body)
                         ]
                     ]
                 ],
@@ -149,7 +166,7 @@ class ParseEndpointToOpenApiDocumentation
     /**
      * @param TestRequestDto[] $requestList
      */
-    private function findRequestWithLessStatusCode(array $requestList): TestRequestDto
+    private function findRequestWithLowestStatusCode(array $requestList): TestRequestDto
     {
         /** @var TestRequestDto|null $requestWithLessStatusCode */
         $requestWithLessStatusCode = null;

@@ -28,7 +28,7 @@ class GenerateOpenApiDocumentationFromCacheFilesTest extends BaseTestCase
         $expectedDocumentation = OpenApiDocPayload::withDefaultBody(<<<YAML
 paths:
   /test:
-    post:
+    get:
       summary: should generate swagger
       description: should generate swagger
       operationId: test_shouldGenerateSwagger
