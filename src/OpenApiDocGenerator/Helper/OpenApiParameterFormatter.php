@@ -4,7 +4,7 @@ namespace Perry\OpenApiDocGenerator\Helper;
 
 class OpenApiParameterFormatter
 {
-    public static function format(array $parameters, string $in): array
+    public static function format(array $parameters, string $in, bool $required = true): array
     {
         $output = [];
 
@@ -12,7 +12,7 @@ class OpenApiParameterFormatter
             $output[] = [
                 'name' => $key,
                 'in' => $in,
-                'required' => true,
+                'required' => $required,
                 'schema' => [
                     'type' => 'string',
                 ],
