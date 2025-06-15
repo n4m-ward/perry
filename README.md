@@ -239,6 +239,37 @@ public function test_shouldCreateUser(): void
 }
 ```
 
+### Using tags
+
+First add the `Tag` attribute on your TestCase or your BaseTestCase
+
+```php
+#[\Perry\Attributes\Tag\Tag(name: 'User', description: "User related endpoints")]
+class SomeTest extends BaseTestCase {}
+```
+
+If you want, you can add the externalDocs to your tag
+
+```php
+#[\Perry\Attributes\Tag\Tag(
+    name: 'User', 
+    description: "User related endpoints"
+    externalDocs: new \Perry\Attributes\ExternalDocs(
+        url: 'https://example.com/external-docs',
+        description: 'Find more info here',
+)]
+class SomeTest extends BaseTestCase {}
+```
+
+Then, on your test method, add the `UsingTag` attribute
+
+```php
+#[\Perry\Attributes\Tag\UsingTag('User')]
+public function test_shouldCreateUser(): void
+{
+}
+```
+
 # Doing assertions
 
 - **The method `perryHttp()` will return an `Illuminate\Testing\TestResponse`**
