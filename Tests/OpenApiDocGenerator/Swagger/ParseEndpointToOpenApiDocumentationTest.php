@@ -26,7 +26,7 @@ class ParseEndpointToOpenApiDocumentationTest extends BaseTestCase
         $this->mockEndpointResponse('get', '/test', ['foo' => 'bar'], Response::HTTP_CREATED);
         $this->perryHttp()->get('/test');
 
-        $parsedEndpoint = $this->parseEndpointToSwaggerDocumentation->execute('_test');
+        $parsedEndpoint = $this->parseEndpointToSwaggerDocumentation->execute('test');
 
         $this->assertEquals([
             "get" => [
@@ -98,7 +98,7 @@ class ParseEndpointToOpenApiDocumentationTest extends BaseTestCase
             [
                 "name" => "token",
                 "in" => "query",
-                "required" => true,
+                "required" => false,
                 "schema" => [
                     "type" => "string",
                 ],
@@ -106,7 +106,7 @@ class ParseEndpointToOpenApiDocumentationTest extends BaseTestCase
             [
                 "name" => "user_id",
                 "in" => "query",
-                "required" => true,
+                "required" => false,
                 "schema" => [
                     "type" => "string",
                 ],
