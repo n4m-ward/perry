@@ -100,10 +100,20 @@ class GenerateOpenApiDocumentationFromCacheFiles
 
     private function getEndpointFromFolderName(string $folder): string
     {
-        $endpoint = str_replace('_', '/', $folder);
+        $endpoint = $this->convertUnderlineToSlash($folder);
         if (!str_starts_with($endpoint, '/')) {
             $endpoint = '/' . $endpoint;
         }
         return $endpoint;
+    }
+
+    private function convertUnderlineToSlash(string $folder): string
+    {
+        return preg_replace_callback('/{[^}]*}|_/', function ($match) {
+            if ($match[0] === '_') {
+                return '/';
+            }
+            return $match[0];
+        }, $folder);
     }
 }

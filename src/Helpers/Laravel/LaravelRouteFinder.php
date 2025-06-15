@@ -9,6 +9,16 @@ class LaravelRouteFinder
 {
     public static function findRealRoute(string $method, string $url): ?string
     {
+        return self::findRoute($method, $url)?->uri();
+    }
+
+    public static function findPathParameters(string $method, string $url): array
+    {
+        return self::findRoute($method, $url)?->parameters() ?? [];
+    }
+
+    private static function findRoute(string $method, string $url): ?RouteObject
+    {
         $method = strtolower($method);
 
         $url = parse_url($url, PHP_URL_PATH);
@@ -25,7 +35,7 @@ class LaravelRouteFinder
             $pattern = '#^' . $pattern . '$#';
 
             if (preg_match($pattern, ltrim($url, '/'))) {
-                return '/' . ltrim($route->uri(), '/');
+                return $route;
             }
         }
 

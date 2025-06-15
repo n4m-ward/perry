@@ -7,6 +7,9 @@ use Perry\Exceptions\PerryAttributeNotFoundException;
 use Perry\Exceptions\PerryInfoAttributeNotFoundException;
 use Perry\Files\Storage;
 use Perry\Helpers\Laravel\LaravelRouteFinder;
+use Perry\Helpers\Tests\TestInfoResolver;
+use Perry\OpenApiDocGenerator\Cache\Dtos\TestRequestDto;
+use Perry\OpenApiDocGenerator\Helper\UrlParser;
 
 class SaveRequestOnCache
 {
@@ -23,7 +26,20 @@ class SaveRequestOnCache
         $usedSecurityScheme = (new FindUsedSecurityScheme())->execute();
         $usedTags = (new FindTagsUsedByTestCase())->execute();
         $realUri = LaravelRouteFinder::findRealRoute($method, $uri);
-        $testRequestDto = TestRequestDtoGenerator::generate($method, $realUri, $data, $headers, $response, $usedSecurityScheme, $usedTags);
+        $pathParameters = LaravelRouteFinder::findPathParameters($method, $uri);
+        $testRequestDto = new TestRequestDto(
+            testName: TestInfoResolver::resolve()->method,
+            method: $method,
+            path: $realUri,
+            statusCode: $response->getStatusCode(),
+            headers: $headers,
+            query: UrlParser::parseQueryParamsFromUrl($uri),
+            body: $data,
+            response: $response->getContent(),
+            usedSecurityScheme: $usedSecurityScheme,
+            usedTags: $usedTags,
+            routeParameters: $pathParameters,
+        );
         Storage::saveTestRequest($testRequestDto);
     }
 }

@@ -5,6 +5,7 @@ namespace Perry\OpenApiDocGenerator\OpenApi;
 use Perry\Attributes\SecurityScheme\UseSecurityScheme;
 use Perry\Files\Storage;
 use Perry\OpenApiDocGenerator\Cache\Dtos\TestRequestDto;
+use Perry\OpenApiDocGenerator\Helper\OpenApiParameterFormatter;
 use Perry\OpenApiDocGenerator\Helper\SwaggerObjectHelper;
 
 class ParseEndpointToOpenApiDocumentation
@@ -29,8 +30,24 @@ class ParseEndpointToOpenApiDocumentation
             'summary' => $requestDescription,
             'description' => $requestDescription,
             'operationId' => $requestWithLessStatusCode->testName,
-            'responses' => $this->formatSwaggerResponses($requestList),
         ];
+
+        if(!empty($requestWithLessStatusCode->routeParameters)) {
+            $output['parameters'] = OpenApiParameterFormatter::format($requestWithLessStatusCode->routeParameters, in: 'path');
+        }
+
+        if(!empty($requestWithLessStatusCode->query)) {
+            $parametersFromQuery = OpenApiParameterFormatter::format($requestWithLessStatusCode->query, in: 'query');
+            $output['parameters'] = array_merge($output['parameters'] ?? [], $parametersFromQuery);
+        }
+
+        if(!empty($requestWithLessStatusCode->headers)) {
+            $parametersFromHeader =  OpenApiParameterFormatter::format($requestWithLessStatusCode->headers, in: 'header');
+            $output['parameters'] = array_merge($output['parameters'] ?? [], $parametersFromHeader);
+        }
+
+        $output['responses'] = $this->formatSwaggerResponses($requestList);
+
         if($requestWithLessStatusCode->usedSecurityScheme) {
             $output['security'] = $this->formatSecurity($requestWithLessStatusCode->usedSecurityScheme);
         }

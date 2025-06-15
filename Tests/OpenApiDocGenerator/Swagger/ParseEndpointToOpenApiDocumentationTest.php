@@ -54,4 +54,71 @@ class ParseEndpointToOpenApiDocumentationTest extends BaseTestCase
             ],
         ], $parsedEndpoint);
     }
+
+    public function test_shouldParseEndpointToOpenApiDocumentationUsingPathParameters(): void
+    {
+        $this->mockEndpointResponse('get', '/api/user/{user_id}/product/{product_id}', ['foo' => 'bar'], Response::HTTP_CREATED);
+        $this->perryHttp()->get('/api/user/123/product/456');
+
+        $parsedEndpoint = $this->parseEndpointToSwaggerDocumentation->execute('api_user_{user_id}_product_{product_id}');
+
+        $this->assertEquals([
+            [
+                "name" => "user_id",
+                "in" => "path",
+                "required" => true,
+                "schema" => [
+                    "type" => "string",
+                ],
+            ],
+            [
+                "name" => "product_id",
+                "in" => "path",
+                "required" => true,
+                "schema" => [
+                    "type" => "string",
+                ],
+            ]
+        ], $parsedEndpoint['get']['parameters']);
+    }
+
+    public function test_shouldParseEndpointToOpenApiDocumentationUsingHeaderParameters(): void
+    {
+        $this->mockEndpointResponse('get', '/api/user', ['foo' => 'bar'], Response::HTTP_CREATED);
+        $this
+            ->perryHttp()
+            ->withHeaders([
+                'Authorization' => 'Bearer token',
+            ])
+            ->get('/api/user?token=some_token&user_id=123');
+
+        $parsedEndpoint = $this->parseEndpointToSwaggerDocumentation->execute('api_user');
+
+        $this->assertEquals([
+            [
+                "name" => "token",
+                "in" => "query",
+                "required" => true,
+                "schema" => [
+                    "type" => "string",
+                ],
+            ],
+            [
+                "name" => "user_id",
+                "in" => "query",
+                "required" => true,
+                "schema" => [
+                    "type" => "string",
+                ],
+            ],
+            [
+                "name" => "Authorization",
+                "in" => "header",
+                "required" => true,
+                "schema" => [
+                    "type" => "string",
+                ],
+            ],
+        ], $parsedEndpoint['get']['parameters']);
+    }
 }

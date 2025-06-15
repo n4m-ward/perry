@@ -16,6 +16,7 @@ class TestRequestDtoGenerator
         TestResponse $response,
         array $usedSecurityScheme = [],
         array $usedTags = [],
+        array $routeParameters = [],
     ): TestRequestDto {
         return new TestRequestDto(
             testName: TestInfoResolver::resolve()->method,
@@ -26,7 +27,9 @@ class TestRequestDtoGenerator
             query: [],
             body: $data,
             response: $response->getContent(),
-            usedSecurityScheme: $usedSecurityScheme
+            usedSecurityScheme: $usedSecurityScheme,
+            usedTags: $usedTags,
+            routeParameters: $routeParameters,
         );
     }
 }

@@ -22,6 +22,7 @@ class TestRequestDto
         public readonly string|null $response,
         public readonly array       $usedSecurityScheme = [],
         public readonly array       $usedTags = [],
+        public readonly array       $routeParameters = [],
     ) {
     }
 }
